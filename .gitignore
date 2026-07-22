@@ -3,3 +3,6 @@ inst/doc
 /Meta/
 docs
 .Rproj.user
+
+/.quarto/
+**/*.quarto_ipynb
