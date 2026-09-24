@@ -2,9 +2,9 @@
 
 ``` r
 
-library(tooltipexplorer)
+library(stocktipr)
 #> 
-#> Attaching package: 'tooltipexplorer'
+#> Attaching package: 'stocktipr'
 #> The following object is masked from 'package:base':
 #> 
 #>     %||%
@@ -12,9 +12,9 @@ library(tooltipexplorer)
 
 ## Module Wiring
 
-`tooltipexplorer` is organized as a collection of Shiny modules, wired
+`stocktipr` is organized as a collection of Shiny modules, wired
 together in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md).
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md).
 Every module follows the same file-and-function layout:
 
 | File | UI function | Server function |
@@ -24,14 +24,14 @@ Every module follows the same file-and-function layout:
 | `R/mod_download.R` | `mod_download_ui(id)` | `mod_download_server(id, inputs_r, perf_r)` |
 
 The two tooltip helpers
-([`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md)
+([`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md)
 and
-[`mod_hoverinfo()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_hoverinfo.md))
+[`mod_hoverinfo()`](https://mjfrigaard.github.io/stocktipr/reference/mod_hoverinfo.md))
 are *not* modules in the Shiny sense; they have no server counterpart
 and no `moduleServer()` call. They are UI / rendering helpers that
 happen to share the `mod_` prefix for discoverability.
 
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md)
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md)
 composes the three UI functions into a
 [`bslib::page_sidebar()`](https://rstudio.github.io/bslib/reference/page_sidebar.html)
 layout. The download module UI is embedded *inside* the inputs sidebar
@@ -48,7 +48,7 @@ app_ui <- function() {
 }
 ```
 
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 wires the three server functions together. The outputs server returns a
 reactive (`perf_r`) that the download server consumes — the only
 inter-module dependency:
@@ -83,7 +83,7 @@ No module reaches up into its parent or sideways into a sibling.
     - **Exports**: `mod_inputs_ui(id)`, `mod_inputs_server(id)`
     - **Key Features**: ticker picker, date range, rolling-vol slider,
       fetch button, embedded
-      [`mod_download_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_ui.md);
+      [`mod_download_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_ui.md);
       fetch-button observer and reactive inputs list on the server side
 2.  **`mod_outputs.R`**
     - **Lines**: 542
@@ -104,18 +104,18 @@ No module reaches up into its parent or sideways into a sibling.
 #### App-Level Functions
 
 4.  **`app_ui.R`**
-    ([`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md))
+    ([`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md))
     - **Lines**: 108
     - **Purpose**: Top-level UI composition
     - **Pattern**: Calls each module’s UI function and composes them
       into
       [`bslib::page_sidebar()`](https://rstudio.github.io/bslib/reference/page_sidebar.html)
     - **Features**: Custom theme
-      ([`tooltipexplorer_theme()`](https://mjfrigaard.github.io/tooltipexplorer/reference/tooltipexplorer_theme.md)),
-      `tooltipexplorer_head()` CSS injection, delegated event handlers
-      for shinyalert/shinyhelper
+      ([`stocktipr_theme()`](https://mjfrigaard.github.io/stocktipr/reference/stocktipr_theme.md)),
+      `stocktipr_head()` CSS injection, delegated event handlers for
+      shinyalert/shinyhelper
 5.  **`app_server.R`**
-    ([`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md))
+    ([`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md))
     - **Lines**: 57
     - **Purpose**: Top-level server orchestration
     - **Pattern**: Calls each module’s server function and wires the
@@ -123,7 +123,7 @@ No module reaches up into its parent or sideways into a sibling.
     - **Features**: Logging threshold setup, shinyhelper initialization,
       session lifecycle logging
 6.  **`launch.R`**
-    ([`launch()`](https://mjfrigaard.github.io/tooltipexplorer/reference/launch.md))
+    ([`launch()`](https://mjfrigaard.github.io/stocktipr/reference/launch.md))
     - **Lines**: 28
     - **Purpose**: Convenience wrapper for launching the Shiny app
     - **Features**: Installs the reactable theme globally, supports
@@ -133,13 +133,13 @@ No module reaches up into its parent or sideways into a sibling.
 #### Helper/Utility Functions
 
 7.  **`mod_tooltip.R`**
-    ([`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md))
+    ([`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md))
     - **Lines**: 205
     - **Type**: Pure UI helper function (no paired server)
     - **Purpose**: Unified interface for four tooltip backends — bslib,
       shinyhelper, prompter, shinyalert
 8.  **`mod_hoverinfo.R`**
-    ([`mod_hoverinfo()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_hoverinfo.md))
+    ([`mod_hoverinfo()`](https://mjfrigaard.github.io/stocktipr/reference/mod_hoverinfo.md))
     - **Lines**: 95
     - **Type**: Server-side helper for reactable cells
     - **Purpose**: Wraps content with a `title` attribute for native
@@ -148,7 +148,7 @@ No module reaches up into its parent or sideways into a sibling.
     - **Lines**: 47 / 42
     - **Purpose**: Structured logging with namespace-based filtering —
       see
-      [`vignette("implementation")`](https://mjfrigaard.github.io/tooltipexplorer/articles/implementation.md)
+      [`vignette("implementation")`](https://mjfrigaard.github.io/stocktipr/articles/implementation.md)
 10. **`utils_operators.R`**
     - **Lines**: 15
     - **Operators**: `%||%` (null-coalescing operator)
@@ -161,7 +161,7 @@ No module reaches up into its parent or sideways into a sibling.
 12. **Theme functions**
     - `setup_theme.R`, `custom_head.R`, `utils_reactable_theme.R`
     - **Purpose**: Dark Bloomberg-terminal styling — see
-      [`vignette("theme")`](https://mjfrigaard.github.io/tooltipexplorer/articles/theme.md)
+      [`vignette("theme")`](https://mjfrigaard.github.io/stocktipr/articles/theme.md)
 
 ### Supporting Files
 
@@ -170,7 +170,7 @@ No module reaches up into its parent or sideways into a sibling.
 - **`README.md`** — Package overview
 - **`inst/report_template.Rmd`** — Parameterised R Markdown template
   used by
-  [`mod_download_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_server.md)
+  [`mod_download_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_server.md)
 - **`.Rbuildignore`** / **`.gitignore`** — Build and version-control
   exclusions
 
@@ -184,7 +184,7 @@ Follow these steps to add a fourth module to the app.
 `mod_<name>_server()`, both exported with `@export`.
 
 **2.** Add the UI call to
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md):
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md):
 
 ``` r
 # app_ui.R
@@ -196,7 +196,7 @@ bslib::page_sidebar(
 ```
 
 **3.** Wire the server in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md):
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md):
 
 ``` r
 # app_server.R

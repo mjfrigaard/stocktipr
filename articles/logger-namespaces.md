@@ -1,11 +1,11 @@
 # Logging with logger: namespaces and thresholds
 
-`tooltipexplorer` uses the
-[`logger`](https://daroczig.github.io/logger/) package for structured,
-namespace-aware logging throughout the application. Every log call
-carries a `namespace` argument that identifies exactly which module or
-layer emitted the message, making it straightforward to filter noise in
-development and route messages selectively in production.
+`stocktipr` uses the [`logger`](https://daroczig.github.io/logger/)
+package for structured, namespace-aware logging throughout the
+application. Every log call carries a `namespace` argument that
+identifies exactly which module or layer emitted the message, making it
+straightforward to filter noise in development and route messages
+selectively in production.
 
 ------------------------------------------------------------------------
 
@@ -30,23 +30,23 @@ silent unless you explicitly lower the threshold.
 
 ## Namespaces in this package
 
-Every `logger::log_*()` call in `tooltipexplorer` passes an explicit
+Every `logger::log_*()` call in `stocktipr` passes an explicit
 `namespace` string. The full set, registered in
-[`app_set_log_threshold()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_set_log_threshold.md),
+[`app_set_log_threshold()`](https://mjfrigaard.github.io/stocktipr/reference/app_set_log_threshold.md),
 is:
 
 | Namespace | File | Covers |
 |----|----|----|
 | `"global"` | — | logger’s built-in global namespace (fallback) |
-| `"tooltipexplorer/app"` | `app_ui.R`, `app_server.R` | UI construction, session lifecycle, module wiring |
-| `"tooltipexplorer/inputs"` | `mod_inputs.R` | Fetch-button events, reactive inputs list |
-| `"tooltipexplorer/outputs"` | `mod_outputs.R` | Price fetch, returns, performance, all render calls |
-| `"tooltipexplorer/download"` | `mod_download.R` | Filename generation, report render |
-| `"tooltipexplorer/tooltip"` | `mod_tooltip.R` | Tooltip helper dispatch |
-| `"tooltipexplorer/hoverinfo"` | `mod_hoverinfo.R` | Hover-span construction |
+| `"stocktipr/app"` | `app_ui.R`, `app_server.R` | UI construction, session lifecycle, module wiring |
+| `"stocktipr/inputs"` | `mod_inputs.R` | Fetch-button events, reactive inputs list |
+| `"stocktipr/outputs"` | `mod_outputs.R` | Price fetch, returns, performance, all render calls |
+| `"stocktipr/download"` | `mod_download.R` | Filename generation, report render |
+| `"stocktipr/tooltip"` | `mod_tooltip.R` | Tooltip helper dispatch |
+| `"stocktipr/hoverinfo"` | `mod_hoverinfo.R` | Hover-span construction |
 
-The `"tooltipexplorer/<module>"` convention means you can silence one
-noisy module while keeping the others verbose — see the examples below.
+The `"stocktipr/<module>"` convention means you can silence one noisy
+module while keeping the others verbose — see the examples below.
 
 ------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ noisy module while keeping the others verbose — see the examples below.
 
 This is the single entry point for changing thresholds. It is called
 once per session in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 and applies the same level to every namespace in the table above.
 [`lapply()`](https://rdrr.io/r/base/lapply.html) iterates over the
 namespace vector, calling
@@ -67,12 +67,12 @@ for each entry. Its return value (a list of `NULL`s) is discarded (only
 app_set_log_threshold <- function(level = logger::INFO) {
   namespaces <- c(
     "global",
-    "tooltipexplorer/app",
-    "tooltipexplorer/inputs",
-    "tooltipexplorer/outputs",
-    "tooltipexplorer/download",
-    "tooltipexplorer/tooltip",
-    "tooltipexplorer/hoverinfo"
+    "stocktipr/app",
+    "stocktipr/inputs",
+    "stocktipr/outputs",
+    "stocktipr/download",
+    "stocktipr/tooltip",
+    "stocktipr/hoverinfo"
   )
   lapply(namespaces, \(ns) logger::log_threshold(level, namespace = ns))
   invisible(level)
@@ -84,17 +84,17 @@ app_set_log_threshold <- function(level = logger::INFO) {
 ``` r
 
 # default (production) — INFO and above only
-tooltipexplorer::app_set_log_threshold(logger::INFO)
+stocktipr::app_set_log_threshold(logger::INFO)
 
 # dev — everything including DEBUG
-tooltipexplorer::app_set_log_threshold(logger::DEBUG)
+stocktipr::app_set_log_threshold(logger::DEBUG)
 
 # silent except for warnings and errors
-tooltipexplorer::app_set_log_threshold(logger::WARN)
+stocktipr::app_set_log_threshold(logger::WARN)
 ```
 
 You can call
-[`app_set_log_threshold()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_set_log_threshold.md)
+[`app_set_log_threshold()`](https://mjfrigaard.github.io/stocktipr/reference/app_set_log_threshold.md)
 interactively at any time while the app is running. The threshold change
 takes effect immediately for all subsequent log calls.
 
@@ -103,7 +103,7 @@ takes effect immediately for all subsequent log calls.
 ## Per-namespace overrides
 
 After calling
-[`app_set_log_threshold()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_set_log_threshold.md)
+[`app_set_log_threshold()`](https://mjfrigaard.github.io/stocktipr/reference/app_set_log_threshold.md)
 you can override individual namespaces with
 [`logger::log_threshold()`](https://daroczig.github.io/logger/reference/log_threshold.html)
 directly:
@@ -111,11 +111,11 @@ directly:
 ``` r
 
 # make the outputs module verbose while keeping everything else at INFO
-tooltipexplorer::app_set_log_threshold(logger::INFO)
-logger::log_threshold(logger::DEBUG, namespace = "tooltipexplorer/outputs")
+stocktipr::app_set_log_threshold(logger::INFO)
+logger::log_threshold(logger::DEBUG, namespace = "stocktipr/outputs")
 
 # silence the download module entirely
-logger::log_threshold(logger::FATAL, namespace = "tooltipexplorer/download")
+logger::log_threshold(logger::FATAL, namespace = "stocktipr/download")
 ```
 
 ### Reading back the current threshold
@@ -123,14 +123,14 @@ logger::log_threshold(logger::FATAL, namespace = "tooltipexplorer/download")
 ``` r
 
 # returns the current level for a given namespace
-logger::log_threshold(namespace = "tooltipexplorer/outputs")
+logger::log_threshold(namespace = "stocktipr/outputs")
 ```
 
 ------------------------------------------------------------------------
 
 ## `with_logging()`
 
-[`with_logging()`](https://mjfrigaard.github.io/tooltipexplorer/reference/with_logging.md)
+[`with_logging()`](https://mjfrigaard.github.io/stocktipr/reference/with_logging.md)
 is a `tryCatch` / `withCallingHandlers` wrapper used around expressions
 that might produce warnings or errors. It logs both, adds a `context`
 label to every message, and then re-issues the condition so Shiny and
@@ -138,7 +138,7 @@ the caller continue to see it normally.
 
 ``` r
 
-with_logging <- function(expr, context = "", ns = "tooltipexplorer/app") {
+with_logging <- function(expr, context = "", ns = "stocktipr/app") {
   tryCatch(
     withCallingHandlers(
       expr,
@@ -161,9 +161,9 @@ with_logging <- function(expr, context = "", ns = "tooltipexplorer/app") {
 }
 ```
 
-[`with_logging()`](https://mjfrigaard.github.io/tooltipexplorer/reference/with_logging.md)
+[`with_logging()`](https://mjfrigaard.github.io/stocktipr/reference/with_logging.md)
 is used in three places in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md):
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md):
 
 ``` r
 
@@ -171,21 +171,21 @@ is used in three places in
 inputs_r <- with_logging(
   mod_inputs_server("inputs"),
   context = "app_server / mod_inputs_server",
-  ns      = "tooltipexplorer/app"
+  ns      = "stocktipr/app"
 )
 
 # wiring the outputs module
 perf_r <- with_logging(
   mod_outputs_server("outputs", inputs_r = inputs_r),
   context = "app_server / mod_outputs_server",
-  ns      = "tooltipexplorer/app"
+  ns      = "stocktipr/app"
 )
 
 # wiring the download module
 with_logging(
   mod_download_server("download", inputs_r = inputs_r, perf_r = perf_r),
   context = "app_server / mod_download_server",
-  ns      = "tooltipexplorer/app"
+  ns      = "stocktipr/app"
 )
 ```
 
@@ -198,12 +198,12 @@ output$bslib_boxes <- shiny::renderUI({
   shiny::req(perf_r())
   with_logging(
     context = "mod_outputs / bslib_boxes",
-    ns      = "tooltipexplorer/outputs",
+    ns      = "stocktipr/outputs",
     {
       df <- perf_r()
       logger::log_debug(
         "Rendering bslib popover boxes | n: {nrow(df)}",
-        namespace = "tooltipexplorer/outputs"
+        namespace = "stocktipr/outputs"
       )
       # ... render code ...
     }
@@ -219,7 +219,7 @@ Below are the log levels used in the application. The logging namespaces
 are helpful for pinpointing where/when execution occurs, and can be
 useful for debugging.
 
-### `app_ui()` and `app_server()`: namespace `"tooltipexplorer/app"`
+### `app_ui()` and `app_server()`: namespace `"stocktipr/app"`
 
 | Event | Level |
 |----|----|
@@ -229,9 +229,9 @@ useful for debugging.
 | `"mod_outputs_server() ready"` | `INFO` |
 | `"mod_download_server() ready"` | `INFO` |
 | `"Session ended | session_id: ..."` | `INFO` |
-| Any warning/error from [`with_logging()`](https://mjfrigaard.github.io/tooltipexplorer/reference/with_logging.md) | `WARN` / `ERROR` |
+| Any warning/error from [`with_logging()`](https://mjfrigaard.github.io/stocktipr/reference/with_logging.md) | `WARN` / `ERROR` |
 
-### `mod_inputs_server()`: namespace `"tooltipexplorer/inputs"`
+### `mod_inputs_server()`: namespace `"stocktipr/inputs"`
 
 | Event | Level |
 |----|----|
@@ -240,7 +240,7 @@ useful for debugging.
 | `"Fetch pressed with no tickers selected"` | `WARN` |
 | `"Inputs reactive evaluated | tickers: [...]"` | `DEBUG` |
 
-### `mod_outputs_server()`: namespace `"tooltipexplorer/outputs"`
+### `mod_outputs_server()`: namespace `"stocktipr/outputs"`
 
 | Event                                                      | Level   |
 |------------------------------------------------------------|---------|
@@ -261,7 +261,7 @@ useful for debugging.
 | `"Rendering shinyalert cards | n: ..."`                    | `DEBUG` |
 | `"Rendering reactable table | n: ..."`                     | `DEBUG` |
 
-### `mod_download_server()`: namespace `"tooltipexplorer/download"`
+### `mod_download_server()`: namespace `"stocktipr/download"`
 
 | Event                                                     | Level   |
 |-----------------------------------------------------------|---------|
@@ -273,7 +273,7 @@ useful for debugging.
 | `"rmarkdown::render() failed | format: ... | error: ..."` | `ERROR` |
 | `"Report render complete | format: ... | file: ..."`      | `INFO`  |
 
-### `mod_hoverinfo()`: namespace `"tooltipexplorer/hoverinfo"`
+### `mod_hoverinfo()`: namespace `"stocktipr/hoverinfo"`
 
 | Event                                                    | Level   |
 |----------------------------------------------------------|---------|
@@ -295,7 +295,7 @@ time the log call is made).
 # Structured fields separated by " | "
 logger::log_info(
   "Fetching prices | tickers: [{paste(tickers, collapse = ', ')}] | from: {from} | to: {to}",
-  namespace = "tooltipexplorer/outputs"
+  namespace = "stocktipr/outputs"
 )
 # → INFO [2026-04-03 08:00:00] Fetching prices | tickers: [AAPL, MSFT] | from: 2024-01-01 | to: 2024-12-31
 ```
@@ -306,7 +306,7 @@ specific field across a log file:
 ``` bash
 grep "tickers:" app.log
 grep "ERROR" app.log
-grep "tooltipexplorer/outputs" app.log
+grep "stocktipr/outputs" app.log
 ```
 
 ------------------------------------------------------------------------
@@ -320,8 +320,8 @@ alongside the console appender:
 
 # Append all INFO+ messages to a rotating log file
 logger::log_appender(
-  logger::appender_tee(file = "tooltipexplorer.log"),
-  namespace = "tooltipexplorer/app"
+  logger::appender_tee(file = "stocktipr.log"),
+  namespace = "stocktipr/app"
 )
 ```
 
@@ -331,7 +331,7 @@ Or route a specific namespace to its own file:
 
 logger::log_appender(
   logger::appender_file("outputs.log"),
-  namespace = "tooltipexplorer/outputs"
+  namespace = "stocktipr/outputs"
 )
 ```
 
@@ -345,13 +345,13 @@ logger::log_appender(
 devtools::load_all()
 
 # 2. Make all namespaces verbose
-tooltipexplorer::app_set_log_threshold(logger::DEBUG)
+stocktipr::app_set_log_threshold(logger::DEBUG)
 
 # 3. (Optional) focus on one noisy namespace only
-logger::log_threshold(logger::DEBUG, namespace = "tooltipexplorer/outputs")
+logger::log_threshold(logger::DEBUG, namespace = "stocktipr/outputs")
 
 # 4. Launch — log messages stream to the console as you interact
-tooltipexplorer::launch()
+stocktipr::launch()
 ```
 
 ------------------------------------------------------------------------
@@ -359,5 +359,5 @@ tooltipexplorer::launch()
 ## References
 
 - [logger package documentation](https://daroczig.github.io/logger/)
-- [`?tooltipexplorer::app_set_log_threshold`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_set_log_threshold.md)
-- [`?tooltipexplorer::with_logging`](https://mjfrigaard.github.io/tooltipexplorer/reference/with_logging.md)
+- [`?stocktipr::app_set_log_threshold`](https://mjfrigaard.github.io/stocktipr/reference/app_set_log_threshold.md)
+- [`?stocktipr::with_logging`](https://mjfrigaard.github.io/stocktipr/reference/with_logging.md)

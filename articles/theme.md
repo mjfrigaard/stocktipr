@@ -2,9 +2,9 @@
 
 ``` r
 
-library(tooltipexplorer)
+library(stocktipr)
 #> 
-#> Attaching package: 'tooltipexplorer'
+#> Attaching package: 'stocktipr'
 #> The following object is masked from 'package:base':
 #> 
 #>     %||%
@@ -12,15 +12,15 @@ library(tooltipexplorer)
 
 ## Overview
 
-`tooltipexplorer` ships a dark, Bloomberg-terminal aesthetic: a
-near-black background, cyan primary accent, amber / green / red data
-colors, and IBM Plex Mono typography throughout. The look is produced by
-three cooperating pieces.
+`stocktipr` ships a dark, Bloomberg-terminal aesthetic: a near-black
+background, cyan primary accent, amber / green / red data colors, and
+IBM Plex Mono typography throughout. The look is produced by three
+cooperating pieces.
 
 ### Color palette
 
 Every surface draws from one shared set of CSS custom properties,
-defined in `tooltipexplorer_head()`:
+defined in `stocktipr_head()`:
 
 | Token           | Hex       | Role                        |
 |-----------------|-----------|-----------------------------|
@@ -43,20 +43,20 @@ giving the app a fixed-width terminal feel.
 
 ### Helper functions
 
-[`tooltipexplorer_theme()`](https://mjfrigaard.github.io/tooltipexplorer/reference/tooltipexplorer_theme.md):
+[`stocktipr_theme()`](https://mjfrigaard.github.io/stocktipr/reference/stocktipr_theme.md):
 Exported. Returns a
 [`bslib::bs_theme()`](https://rstudio.github.io/bslib/reference/bs_theme.html)
 object passed to `theme =` in
 [`bslib::page_sidebar()`](https://rstudio.github.io/bslib/reference/page_sidebar.html)
 inside
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md).
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md).
 It sets the semantic Bootstrap colors (`primary` cyan, `secondary`
 amber, `success` green, `warning` amber, `danger` red, `info` bright
 cyan), the dark `bg` / `fg`, panel and border variables, and IBM Plex
 Mono as the base, heading, and monospace font.
 
-`tooltipexplorer_head()`: Internal (`@noRd`), called by
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md).
+`stocktipr_head()`: Internal (`@noRd`), called by
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md).
 Emits the `<head>` tags: the Google Fonts link for IBM Plex Mono / Sans
 and the inline `<style>` block that defines the palette tokens above and
 styles navbar, cards, value boxes, buttons, tabs, tables, alerts, the
@@ -66,12 +66,12 @@ widgets that don’t inherit `bslib` theme variables automatically —
 `bootstrap-datepicker` (date range), popovers, and the `shinyhelper`
 modal.
 
-[`utils_reactable_theme()`](https://mjfrigaard.github.io/tooltipexplorer/reference/utils_reactable_theme.md):
+[`utils_reactable_theme()`](https://mjfrigaard.github.io/stocktipr/reference/utils_reactable_theme.md):
 Internal. Returns a
 [`reactable::reactableTheme()`](https://glin.github.io/reactable/reference/reactableTheme.html)
 matching the palette (dark panels, amber uppercase headers, mono tabular
 numerals, amber row highlight, dark search / filter / select inputs).
-[`launch()`](https://mjfrigaard.github.io/tooltipexplorer/reference/launch.md)
+[`launch()`](https://mjfrigaard.github.io/stocktipr/reference/launch.md)
 installs it globally with
 `options(reactable.theme = utils_reactable_theme())`, so the reactable
 demo table inherits it with no per-call theming.
@@ -80,12 +80,12 @@ demo table inherits it with no per-call theming.
 
 Two spots set colors directly rather than through the shared theme:
 
-- [`mod_inputs_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_ui.md)
+- [`mod_inputs_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_ui.md)
   passes `bg = "#12161d"` / `fg = "#d5dde5"` to
   [`bslib::sidebar()`](https://rstudio.github.io/bslib/reference/sidebar.html)
   so the sidebar panel matches `--bbg-panel` / `--bbg-text` instead of
   bslib’s default light sidebar background.
-- [`mod_outputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_outputs_server.md)
+- [`mod_outputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_outputs_server.md)
   gives the KPI value boxes a custom
   `bslib::value_box_theme(bg = "#00d9ff", fg = "#05070a")` (cyan /
   near-black) for Sharpe ratios `>= 1`, in place of the Bootstrap
@@ -115,8 +115,8 @@ How the theme pieces are wired together, from the entry point down:
 │ └─reactable.theme = █─utils_reactable_theme
 └─█─shinyApp
   ├─█─app_ui
-  │ ├─theme = █─tooltipexplorer_theme
-  │ └─█─tooltipexplorer_head
+  │ ├─theme = █─stocktipr_theme
+  │ └─█─stocktipr_head
   └─█─app_server
 ```
 
@@ -125,14 +125,14 @@ How the theme pieces are wired together, from the entry point down:
 **Theme files:**
 
 - `R/setup_theme.R`:
-  [`tooltipexplorer_theme()`](https://mjfrigaard.github.io/tooltipexplorer/reference/tooltipexplorer_theme.md)
-- `R/custom_head.R`: `tooltipexplorer_head()` with inline CSS injection
+  [`stocktipr_theme()`](https://mjfrigaard.github.io/stocktipr/reference/stocktipr_theme.md)
+- `R/custom_head.R`: `stocktipr_head()` with inline CSS injection
 - `R/utils_reactable_theme.R`:
-  [`utils_reactable_theme()`](https://mjfrigaard.github.io/tooltipexplorer/reference/utils_reactable_theme.md)
+  [`utils_reactable_theme()`](https://mjfrigaard.github.io/stocktipr/reference/utils_reactable_theme.md)
 
 Unlike a stand-alone stylesheet, all custom CSS lives in the single
-`tooltipexplorer_head()` `<style>` block — there is no external `.css`
-file to keep in sync.
+`stocktipr_head()` `<style>` block — there is no external `.css` file to
+keep in sync.
 
 ## `pkgdown` site
 

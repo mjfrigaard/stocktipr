@@ -24,8 +24,8 @@ mod_outputs_ui(id)
 A
 [`shiny::tagList()`](https://rstudio.github.io/htmltools/reference/tagList.html)
 ready to embed in
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md).
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md).
 
 ## See also
 
-[`mod_outputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_outputs_server.md)
+[`mod_outputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_outputs_server.md)

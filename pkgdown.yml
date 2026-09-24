@@ -4,10 +4,12 @@ pkgdown_sha: ~
 articles:
   design: design.html
   implementation: implementation.html
+  logger-namespaces: logger-namespaces.html
+  modules: modules.html
   structure: structure.html
   theme: theme.html
   tooltips-hover-info: tooltips-hover-info.html
-last_built: 2026-07-30T22:23Z
+last_built: 2026-09-24T17:32Z
 urls:
-  reference: https://mjfrigaard.github.io/tooltipexplorer/reference
-  article: https://mjfrigaard.github.io/tooltipexplorer/articles
+  reference: https://mjfrigaard.github.io/stocktipr/reference
+  article: https://mjfrigaard.github.io/stocktipr/articles

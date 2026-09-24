@@ -41,4 +41,4 @@ A reactive list with elements:
 
 ## See also
 
-[`mod_inputs_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_ui.md)
+[`mod_inputs_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_ui.md)

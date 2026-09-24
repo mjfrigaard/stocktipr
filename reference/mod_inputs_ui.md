@@ -27,4 +27,4 @@ tag object.
 
 ## See also
 
-[`mod_inputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_server.md)
+[`mod_inputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_server.md)

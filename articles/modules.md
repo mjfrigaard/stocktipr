@@ -1,8 +1,8 @@
 # Module structure
 
-`tooltipexplorer` is organized as a collection of Shiny modules, wired
+`stocktipr` is organized as a collection of Shiny modules, wired
 together in the
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md).
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md).
 This vignette explains the naming convention, the UI/server split, how
 data flows between modules, and the role each module plays.
 
@@ -19,9 +19,9 @@ Every module follows the same file-and-function layout:
 | `R/mod_download.R` | `mod_download_ui(id)` | `mod_download_server(id, inputs_r, perf_r)` |
 
 The two tooltip helpers
-([`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md)
+([`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md)
 and
-[`mod_hoverinfo()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_hoverinfo.md))
+[`mod_hoverinfo()`](https://mjfrigaard.github.io/stocktipr/reference/mod_hoverinfo.md))
 are *not* modules in the Shiny sense; they have no server counterpart
 and no `moduleServer()` call.
 
@@ -32,7 +32,7 @@ for discoverability.
 
 ## Module wiring
 
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md)
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md)
 composes the three UI functions into a
 [`bslib::page_sidebar()`](https://rstudio.github.io/bslib/reference/page_sidebar.html)
 layout. The download module UI is embedded *inside* the inputs sidebar
@@ -49,7 +49,7 @@ app_ui <- function() {
 }
 ```
 
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 wires the three server functions together. The outputs server returns a
 reactive (`perf_r`) that the download server consumes (his is the only
 inter-module dependency).
@@ -77,8 +77,8 @@ No module reaches up into its parent or sideways into a sibling.
 
 **Files:** `R/mod_inputs.R`  
 **Exports:**
-[`mod_inputs_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_ui.md),
-[`mod_inputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_server.md)
+[`mod_inputs_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_ui.md),
+[`mod_inputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_server.md)
 
 ### UI function
 
@@ -92,7 +92,7 @@ containing:
 - `actionButton` — “Fetch data” trigger
 - `mod_download_ui("download")` — embedded at the bottom
 
-[`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md)
+[`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md)
 with `type = "bslib"` is used on the ticker and vol-window labels to
 attach `bslib` popovers without any server-side code:
 
@@ -141,8 +141,8 @@ explicitly requests new data.
 
 **Files:** `R/mod_outputs.R`  
 **Exports:**
-[`mod_outputs_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_outputs_ui.md),
-[`mod_outputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_outputs_server.md)
+[`mod_outputs_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_outputs_ui.md),
+[`mod_outputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_outputs_server.md)
 
 ### UI function
 
@@ -158,11 +158,11 @@ with two pieces:
 
 | Tab | Back-end | Interaction |
 |----|----|----|
-| `bslib` | [`bslib::popover()`](https://rstudio.github.io/bslib/reference/popover.html) via [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | Click info icon |
-| `shinyhelper` | [`shinyhelper::helper()`](https://rdrr.io/pkg/shinyhelper/man/helper.html) via [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | Click circled-? |
-| `prompter` | [`prompter::add_prompt()`](https://rdrr.io/pkg/prompter/man/add_prompt.html) via [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | Hover over label |
-| `shinyalert` | `data-sa-*` attrs + delegated JS via [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | Click ticker card |
-| reactable | `htmltools` `<span title>` via [`mod_hoverinfo()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_hoverinfo.md) | Hover over cell |
+| `bslib` | [`bslib::popover()`](https://rstudio.github.io/bslib/reference/popover.html) via [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | Click info icon |
+| `shinyhelper` | [`shinyhelper::helper()`](https://rdrr.io/pkg/shinyhelper/man/helper.html) via [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | Click circled-? |
+| `prompter` | [`prompter::add_prompt()`](https://rdrr.io/pkg/prompter/man/add_prompt.html) via [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | Hover over label |
+| `shinyalert` | `data-sa-*` attrs + delegated JS via [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | Click ticker card |
+| reactable | `htmltools` `<span title>` via [`mod_hoverinfo()`](https://mjfrigaard.github.io/stocktipr/reference/mod_hoverinfo.md) | Hover over cell |
 
 ### Server function
 
@@ -171,7 +171,7 @@ app. It registers
 [`shinyhelper::observe_helpers()`](https://rdrr.io/pkg/shinyhelper/man/observe_helpers.html)
 once per session (required by `shinyhelper`; do not call it separately
 in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)),
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)),
 then chains four reactives triggered by `inputs_r()$fetch`:
 
 ``` r
@@ -199,9 +199,9 @@ perf_r <- shiny::reactive({
 ```
 
 `perf_r` is returned to
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 so
-[`mod_download_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_server.md)
+[`mod_download_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_server.md)
 can embed it in the rendered report without re-computing it.
 
 ### KPI value boxes
@@ -216,7 +216,7 @@ theme <- if (sharpe >= 1) "success" else if (sharpe >= 0) "warning" else "danger
 ### `reactable` tab and `mod_hoverinfo()`
 
 The `reactable` tab is the only output that uses
-[`mod_hoverinfo()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_hoverinfo.md).
+[`mod_hoverinfo()`](https://mjfrigaard.github.io/stocktipr/reference/mod_hoverinfo.md).
 Each numeric column in the performance table gets a `colDef` cell
 renderer that wraps the formatted value in an `htmltools`
 `<span title="...">`:
@@ -248,8 +248,8 @@ reactable::colDef(
 
 **Files:** `R/mod_download.R`  
 **Exports:**
-[`mod_download_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_ui.md),
-[`mod_download_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_server.md)
+[`mod_download_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_ui.md),
+[`mod_download_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_server.md)
 
 ### UI function
 
@@ -261,7 +261,7 @@ with:
 - `downloadButton` — triggers the handler
 
 The `card` is embedded at the bottom of the inputs sidebar by
-[`mod_inputs_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_ui.md):
+[`mod_inputs_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_ui.md):
 
 ``` r
 
@@ -274,7 +274,7 @@ bslib::sidebar(
 
 This keeps all user controls in the sidebar while the download server is
 wired at the top level in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md).
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md).
 
 ### Server
 
@@ -355,7 +355,7 @@ Follow these steps to add a fourth module to the app.
 `mod_<name>_server()`, both exported with `@export`.
 
 **2.** Add the UI call to
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md):
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md):
 
 ``` r
 # app_ui.R
@@ -367,7 +367,7 @@ bslib::page_sidebar(
 ```
 
 **3.** Wire the server in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md):
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md):
 
 ``` r
 # app_server.R

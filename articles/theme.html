@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Theme • tooltipexplorer</title>
+<title>Theme • stocktipr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Ubuntu-0.4.10/font.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">tooltipexplorer</a>
+    <a class="navbar-brand me-2" href="../index.html">stocktipr</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
@@ -38,6 +38,8 @@
 <li><a class="dropdown-item" href="../articles/tooltips-hover-info.html">Tooltip and Hover-Info Explorer</a></li>
     <li><a class="dropdown-item" href="../articles/design.html">Design</a></li>
     <li><a class="dropdown-item" href="../articles/implementation.html">Implementation</a></li>
+    <li><a class="dropdown-item" href="../articles/logger-namespaces.html">Logging with logger: namespaces and thresholds</a></li>
+    <li><a class="dropdown-item" href="../articles/modules.html">Module structure</a></li>
     <li><a class="dropdown-item" href="../articles/structure.html">Structure</a></li>
     <li><a class="dropdown-item" href="../articles/theme.html">Theme</a></li>
   </ul>
@@ -70,24 +72,24 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/tooltipexplorer/">tooltipexplorer</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/stocktipr/">stocktipr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'tooltipexplorer'</span></span>
+<span><span class="co">#&gt; Attaching package: 'stocktipr'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     %||%</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><code>tooltipexplorer</code> ships a dark, Bloomberg-terminal
-aesthetic: a near-black background, cyan primary accent, amber / green /
-red data colors, and IBM Plex Mono typography throughout. The look is
-produced by three cooperating pieces.</p>
+<p><code>stocktipr</code> ships a dark, Bloomberg-terminal aesthetic: a
+near-black background, cyan primary accent, amber / green / red data
+colors, and IBM Plex Mono typography throughout. The look is produced by
+three cooperating pieces.</p>
 <div class="section level3">
 <h3 id="color-palette">Color palette<a class="anchor" aria-label="anchor" href="#color-palette"></a>
 </h3>
 <p>Every surface draws from one shared set of CSS custom properties,
-defined in <code>tooltipexplorer_head()</code>:</p>
+defined in <code>stocktipr_head()</code>:</p>
 <table class="table">
 <thead><tr class="header">
 <th>Token</th>
@@ -168,7 +170,7 @@ giving the app a fixed-width terminal feel.</p>
 <div class="section level3">
 <h3 id="helper-functions">Helper functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a>
 </h3>
-<p><code><a href="../reference/tooltipexplorer_theme.html">tooltipexplorer_theme()</a></code>: Exported. Returns a
+<p><code><a href="../reference/stocktipr_theme.html">stocktipr_theme()</a></code>: Exported. Returns a
 <code><a href="https://rstudio.github.io/bslib/reference/bs_theme.html" class="external-link">bslib::bs_theme()</a></code> object passed to <code>theme =</code> in
 <code><a href="https://rstudio.github.io/bslib/reference/page_sidebar.html" class="external-link">bslib::page_sidebar()</a></code> inside <code><a href="../reference/app_ui.html">app_ui()</a></code>. It sets
 the semantic Bootstrap colors (<code>primary</code> cyan,
@@ -177,9 +179,9 @@ the semantic Bootstrap colors (<code>primary</code> cyan,
 bright cyan), the dark <code>bg</code> / <code>fg</code>, panel and
 border variables, and IBM Plex Mono as the base, heading, and monospace
 font.</p>
-<p><code>tooltipexplorer_head()</code>: Internal (<code>@noRd</code>),
-called by <code><a href="../reference/app_ui.html">app_ui()</a></code>. Emits the <code>&lt;head&gt;</code>
-tags: the Google Fonts link for IBM Plex Mono / Sans and the inline
+<p><code>stocktipr_head()</code>: Internal (<code>@noRd</code>), called
+by <code><a href="../reference/app_ui.html">app_ui()</a></code>. Emits the <code>&lt;head&gt;</code> tags: the
+Google Fonts link for IBM Plex Mono / Sans and the inline
 <code>&lt;style&gt;</code> block that defines the palette tokens above
 and styles navbar, cards, value boxes, buttons, tabs, tables, alerts,
 the sidebar, scrollbars, a <code>.rt-*</code> reactable fallback, and
@@ -235,8 +237,8 @@ down:</p>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>│ └─reactable.theme = █─utils_reactable_theme</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>└─█─shinyApp</span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  ├─█─app_ui</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  │ ├─theme = █─tooltipexplorer_theme</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  │ └─█─tooltipexplorer_head</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  │ ├─theme = █─stocktipr_theme</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  │ └─█─stocktipr_head</span>
 <span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  └─█─app_server</span></code></pre></div>
 </div>
 <div class="section level3">
@@ -245,20 +247,19 @@ down:</p>
 <p><strong>Theme files:</strong></p>
 <ul>
 <li>
-<code>R/setup_theme.R</code>:
-<code><a href="../reference/tooltipexplorer_theme.html">tooltipexplorer_theme()</a></code>
+<code>R/setup_theme.R</code>: <code><a href="../reference/stocktipr_theme.html">stocktipr_theme()</a></code>
 </li>
 <li>
-<code>R/custom_head.R</code>: <code>tooltipexplorer_head()</code>
-with inline CSS injection</li>
+<code>R/custom_head.R</code>: <code>stocktipr_head()</code> with
+inline CSS injection</li>
 <li>
 <code>R/utils_reactable_theme.R</code>:
 <code><a href="../reference/utils_reactable_theme.html">utils_reactable_theme()</a></code>
 </li>
 </ul>
 <p>Unlike a stand-alone stylesheet, all custom CSS lives in the single
-<code>tooltipexplorer_head()</code> <code>&lt;style&gt;</code> block —
-there is no external <code>.css</code> file to keep in sync.</p>
+<code>stocktipr_head()</code> <code>&lt;style&gt;</code> block — there
+is no external <code>.css</code> file to keep in sync.</p>
 </div>
 </div>
 <div class="section level2">

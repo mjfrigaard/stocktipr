@@ -1,8 +1,8 @@
-# tooltipexplorer
+# stocktipr
 
-**tooltipexplorer** is a Shiny application-package for demoing and
-comparing five tooltip and hover-info approaches in R, powered by real
-financial data from [Tidy Finance](https://www.tidy-finance.org/r/)
+**`stocktipr`** is a Shiny application-package for demoing and comparing
+five tooltip and hover-info approaches in R, powered by real financial
+data from [Tidy Finance](https://www.tidy-finance.org/r/)
 (`tidyfinance`) and
 [tidyquant](https://business-science.github.io/tidyquant/).
 
@@ -13,14 +13,14 @@ Install the development version from GitHub:
 ``` r
 
 # install.packages("pak")
-pak::pak("mjfrigaard/tooltipexplorer")
+pak::pak("mjfrigaard/stocktipr")
 ```
 
 ## Quick start
 
 ``` r
 
-library(tooltipexplorer)
+library(stocktipr)
 ```
 
 ``` r
@@ -61,7 +61,7 @@ ff3 <- get_ff3_factors("2020-01-01", "2023-12-31")
 
 ## Tooltip helpers
 
-[`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md)
+[`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md)
 provides a single interface across all click/hover back-ends:
 
 ``` r
@@ -82,7 +82,7 @@ mod_tooltip(
 )
 ```
 
-[`mod_hoverinfo()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_hoverinfo.md)
+[`mod_hoverinfo()`](https://mjfrigaard.github.io/stocktipr/reference/mod_hoverinfo.md)
 formats hover content for `reactable` table cells:
 
 ``` r
@@ -115,6 +115,6 @@ app_set_log_threshold(logger::WARN)   # quiet   (production)
 ## Learn more
 
 See
-[`vignette("tooltips-hover-info", package = "tooltipexplorer")`](https://mjfrigaard.github.io/tooltipexplorer/articles/tooltips-hover-info.md)
+[`vignette("tooltips-hover-info", package = "stocktipr")`](https://mjfrigaard.github.io/stocktipr/articles/tooltips-hover-info.md)
 for a full walkthrough of the app architecture, module API, and each
 tooltip back-end.
