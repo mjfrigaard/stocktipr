@@ -33,7 +33,7 @@ mod_inputs_ui <- function(id) {
         )
       ),
       choices  = stocktipr::default_tickers,
-      selected = c("AAPL", "MSFT", "GOOGL"),
+      selected = stocktipr::default_tickers[1:3],
       multiple = TRUE,
       options  = list(
         plugins     = list("remove_button"),
