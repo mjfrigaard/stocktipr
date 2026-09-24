@@ -4,7 +4,7 @@
 \alias{with_logging}
 \title{Execute an expression with structured error and warning logging}
 \usage{
-with_logging(expr, context = "", ns = "tooltipexplorer/app")
+with_logging(expr, context = "", ns = "stocktipr/app")
 }
 \arguments{
 \item{expr}{Expression to evaluate (passed unevaluated via \code{...}).}
@@ -13,7 +13,7 @@ with_logging(expr, context = "", ns = "tooltipexplorer/app")
 \code{"mod_outputs / prices_r"}.  Prepended to every log message.}
 
 \item{ns}{Logger namespace string.
-Defaults to \code{"tooltipexplorer/app"}.}
+Defaults to \code{"stocktipr/app"}.}
 }
 \value{
 The value of \code{expr} on success; re-throws on error.
@@ -31,7 +31,7 @@ Shiny sees the error normally
 \dontrun{
 result <- with_logging(
   context = "my_module / compute",
-  ns      = "tooltipexplorer/app",
+  ns      = "stocktipr/app",
   sqrt(4)
 )
 }

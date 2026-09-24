@@ -50,14 +50,14 @@ mod_hoverinfo <- function(
 
   logger::log_debug(
     "mod_hoverinfo() | type: {type} | contents length: {length(contents)}",
-    namespace = "tooltipexplorer/hoverinfo"
+    namespace = "stocktipr/hoverinfo"
   )
 
   tryCatch(
     {
       logger::log_debug(
         "mod_hoverinfo() building reactable span | named: {!is.null(names(contents))}",
-        namespace = "tooltipexplorer/hoverinfo"
+        namespace = "stocktipr/hoverinfo"
       )
 
       if (!is.null(names(contents)) && any(nzchar(names(contents)))) {
@@ -87,7 +87,7 @@ mod_hoverinfo <- function(
     error = function(e) {
       logger::log_error(
         "mod_hoverinfo() failed | type: {type} | error: {conditionMessage(e)}",
-        namespace = "tooltipexplorer/hoverinfo"
+        namespace = "stocktipr/hoverinfo"
       )
       stop(e)
     }

@@ -15,12 +15,12 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(tooltipexplorer)
+library(stocktipr)
 ```
 
 ## Module Wiring
 
-`tooltipexplorer` is organized as a collection of Shiny modules, wired together in `app_server()`. Every module follows the same file-and-function layout:
+`stocktipr` is organized as a collection of Shiny modules, wired together in `app_server()`. Every module follows the same file-and-function layout:
 
 | File | UI function | Server function |
 |------------------------|------------------------|------------------------|
@@ -91,7 +91,7 @@ No module reaches up into its parent or sideways into a sibling.
     -   **Lines**: 108
     -   **Purpose**: Top-level UI composition
     -   **Pattern**: Calls each module's UI function and composes them into `bslib::page_sidebar()`
-    -   **Features**: Custom theme (`tooltipexplorer_theme()`), `tooltipexplorer_head()` CSS injection, delegated event handlers for shinyalert/shinyhelper
+    -   **Features**: Custom theme (`stocktipr_theme()`), `stocktipr_head()` CSS injection, delegated event handlers for shinyalert/shinyhelper
 5.  **`app_server.R`** (`app_server()`)
     -   **Lines**: 57
     -   **Purpose**: Top-level server orchestration

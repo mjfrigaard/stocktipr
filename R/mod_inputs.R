@@ -32,7 +32,7 @@ mod_inputs_ui <- function(id) {
           style    = "color:#8b95a1"
         )
       ),
-      choices  = tooltipexplorer::default_tickers,
+      choices  = stocktipr::default_tickers,
       selected = c("AAPL", "MSFT", "GOOGL"),
       multiple = TRUE,
       options  = list(
@@ -111,7 +111,7 @@ mod_inputs_server <- function(id) {
 
     logger::log_debug(
       "mod_inputs_server() initialised | id: {id}",
-      namespace = "tooltipexplorer/inputs"
+      namespace = "stocktipr/inputs"
     )
 
     # ── Fetch button observer ───────────────────────────────────────────────
@@ -120,13 +120,13 @@ mod_inputs_server <- function(id) {
 
       logger::log_info(
         "Fetch button pressed | tickers: [{paste(input$tickers, collapse = ', ')}] | from: {input$dates[1]} | to: {input$dates[2]} | vol_window: {input$vol_window}",
-        namespace = "tooltipexplorer/inputs"
+        namespace = "stocktipr/inputs"
       )
 
       if (length(input$tickers) == 0) {
         logger::log_warn(
           "Fetch pressed with no tickers selected",
-          namespace = "tooltipexplorer/inputs"
+          namespace = "stocktipr/inputs"
         )
         shiny::showNotification(
           "Please select at least one ticker.",
@@ -139,7 +139,7 @@ mod_inputs_server <- function(id) {
     shiny::reactive({
       with_logging(
         context = "mod_inputs_server / reactive list",
-        ns      = "tooltipexplorer/inputs",
+        ns      = "stocktipr/inputs",
         {
           inp <- list(
             tickers    = input$tickers,
@@ -151,7 +151,7 @@ mod_inputs_server <- function(id) {
 
           logger::log_debug(
             "Inputs reactive evaluated | tickers: [{paste(inp$tickers, collapse = ', ')}]",
-            namespace = "tooltipexplorer/inputs"
+            namespace = "stocktipr/inputs"
           )
 
           inp

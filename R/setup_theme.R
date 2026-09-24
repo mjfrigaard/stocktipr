@@ -1,4 +1,4 @@
-#' Setup tooltipexplorer theme and styling
+#' Setup stocktipr theme and styling
 #'
 #' Creates a custom bslib theme with the app's dark "terminal" palette and
 #' typography. Called internally by [app_ui()] to apply global theming.
@@ -14,13 +14,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' theme <- tooltipexplorer_theme()
+#' theme <- stocktipr_theme()
 #' # Use in app_ui():
 #' # page_sidebar(theme = theme, ...)
 #' }
 #'
 #' @export
-tooltipexplorer_theme <- function() {
+stocktipr_theme <- function() {
   mono <- '"IBM Plex Mono", "JetBrains Mono", "SFMono-Regular", "Courier New", monospace'
   bslib::bs_theme(
     version = 5,

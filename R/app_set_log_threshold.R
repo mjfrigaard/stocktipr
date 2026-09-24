@@ -1,7 +1,7 @@
 #' Set the application-wide log threshold
 #'
 #' A thin wrapper around [logger::log_threshold()] that applies the chosen
-#' level to every logger namespace used by **tooltipexplorer**.
+#' level to every logger namespace used by **stocktipr**.
 #'
 #' Log levels from lowest to highest verbosity:
 #' `TRACE`, `DEBUG`, `INFO`, `SUCCESS`, `WARN`, `ERROR`, `FATAL`.
@@ -30,12 +30,12 @@
 app_set_log_threshold <- function(level = logger::INFO) {
   namespaces <- c(
     "global",
-    "tooltipexplorer/app",
-    "tooltipexplorer/inputs",
-    "tooltipexplorer/outputs",
-    "tooltipexplorer/download",
-    "tooltipexplorer/tooltip",
-    "tooltipexplorer/hoverinfo"
+    "stocktipr/app",
+    "stocktipr/inputs",
+    "stocktipr/outputs",
+    "stocktipr/download",
+    "stocktipr/tooltip",
+    "stocktipr/hoverinfo"
   )
   lapply(namespaces, \(ns) logger::log_threshold(level, namespace = ns))
   invisible(level)

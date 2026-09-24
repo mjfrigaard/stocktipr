@@ -1,4 +1,4 @@
-Package: tooltipexplorer
+Package: stocktipr
 Title: Tooltip and Hover-Info Explorer
 Version: 0.0.1
 Authors@R: 
@@ -7,7 +7,7 @@ Description: A Shiny application for demoing and exploring tooltip and
     hover-info options in R using financial data from tidyfinance and
     tidyquant.
 License: MIT + file LICENSE
-URL: https://mjfrigaard.github.io/tooltipexplorer/
+URL: https://mjfrigaard.github.io/stocktipr/
 Imports:
     bsicons,
     bslib (>= 0.5.0),
@@ -32,4 +32,4 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

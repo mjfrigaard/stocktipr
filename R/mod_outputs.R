@@ -113,7 +113,7 @@ mod_outputs_server <- function(id, inputs_r) {
 
     logger::log_debug(
       "mod_outputs_server() initialised | id: {id}",
-      namespace = "tooltipexplorer/outputs"
+      namespace = "stocktipr/outputs"
     )
 
     # -- Fetch prices on button click ------------------------------------------
@@ -123,12 +123,12 @@ mod_outputs_server <- function(id, inputs_r) {
 
       logger::log_info(
         "Fetching prices | tickers: [{paste(inp$tickers, collapse = ', ')}] | from: {inp$from} | to: {inp$to}",
-        namespace = "tooltipexplorer/outputs"
+        namespace = "stocktipr/outputs"
       )
 
       result <- tryCatch({
         shiny::withProgress(message = "Fetching prices...", value = 0.3, {
-          p <- tooltipexplorer::get_stock_prices(
+          p <- stocktipr::get_stock_prices(
             tickers = inp$tickers,
             from    = inp$from,
             to      = inp$to
@@ -139,7 +139,7 @@ mod_outputs_server <- function(id, inputs_r) {
       }, error = function(e) {
         logger::log_error(
           "Price fetch failed | tickers: [{paste(inp$tickers, collapse = ', ')}] | error: {conditionMessage(e)}",
-          namespace = "tooltipexplorer/outputs"
+          namespace = "stocktipr/outputs"
         )
         shiny::showNotification(
           paste("Failed to fetch prices:", conditionMessage(e)),
@@ -151,7 +151,7 @@ mod_outputs_server <- function(id, inputs_r) {
 
       logger::log_info(
         "Prices fetched | rows: {nrow(result)} | tickers: [{paste(unique(result$symbol), collapse = ', ')}]",
-        namespace = "tooltipexplorer/outputs"
+        namespace = "stocktipr/outputs"
       )
       result
     })
@@ -161,21 +161,21 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(prices_r())
       logger::log_debug(
         "Computing daily returns",
-        namespace = "tooltipexplorer/outputs"
+        namespace = "stocktipr/outputs"
       )
       result <- tryCatch(
-        tooltipexplorer::get_stock_returns(prices_r()),
+        stocktipr::get_stock_returns(prices_r()),
         error = function(e) {
           logger::log_error(
             "get_stock_returns() failed | error: {conditionMessage(e)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
           stop(e)
         }
       )
       logger::log_debug(
         "Returns computed | rows: {nrow(result)}",
-        namespace = "tooltipexplorer/outputs"
+        namespace = "stocktipr/outputs"
       )
       result
     })
@@ -185,21 +185,21 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(returns_r())
       logger::log_debug(
         "Computing performance summary",
-        namespace = "tooltipexplorer/outputs"
+        namespace = "stocktipr/outputs"
       )
       result <- tryCatch(
-        tooltipexplorer::summarise_performance(returns_r()),
+        stocktipr::summarise_performance(returns_r()),
         error = function(e) {
           logger::log_error(
             "summarise_performance() failed | error: {conditionMessage(e)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
           stop(e)
         }
       )
       logger::log_info(
         "Performance summary ready | symbols: [{paste(result$symbol, collapse = ', ')}]",
-        namespace = "tooltipexplorer/outputs"
+        namespace = "stocktipr/outputs"
       )
       result
     })
@@ -209,12 +209,12 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(perf_r())
       with_logging(
         context = "mod_outputs / value_boxes",
-        ns      = "tooltipexplorer/outputs",
+        ns      = "stocktipr/outputs",
         {
           df <- perf_r()
           logger::log_debug(
             "Rendering value boxes | n: {nrow(df)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
 
           boxes <- lapply(seq_len(nrow(df)), function(i) {
@@ -250,12 +250,12 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(perf_r())
       with_logging(
         context = "mod_outputs / bslib_boxes",
-        ns      = "tooltipexplorer/outputs",
+        ns      = "stocktipr/outputs",
         {
           df <- perf_r()
           logger::log_debug(
             "Rendering bslib popover boxes | n: {nrow(df)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
 
           boxes <- lapply(seq_len(nrow(df)), function(i) {
@@ -299,12 +299,12 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(perf_r())
       with_logging(
         context = "mod_outputs / shinyhelper_cards",
-        ns      = "tooltipexplorer/outputs",
+        ns      = "stocktipr/outputs",
         {
           df <- perf_r()
           logger::log_debug(
             "Rendering shinyhelper cards | n: {nrow(df)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
 
           cards <- lapply(seq_len(nrow(df)), function(i) {
@@ -346,12 +346,12 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(perf_r())
       with_logging(
         context = "mod_outputs / prompter_cards",
-        ns      = "tooltipexplorer/outputs",
+        ns      = "stocktipr/outputs",
         {
           df <- perf_r()
           logger::log_debug(
             "Rendering prompter cards | n: {nrow(df)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
 
           cards <- lapply(seq_len(nrow(df)), function(i) {
@@ -414,12 +414,12 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(perf_r())
       with_logging(
         context = "mod_outputs / shinyalert_cards",
-        ns      = "tooltipexplorer/outputs",
+        ns      = "stocktipr/outputs",
         {
           df <- perf_r()
           logger::log_debug(
             "Rendering shinyalert cards | n: {nrow(df)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
 
           cards <- lapply(seq_len(nrow(df)), function(i) {
@@ -459,7 +459,7 @@ mod_outputs_server <- function(id, inputs_r) {
       shiny::req(perf_r())
       with_logging(
         context = "mod_outputs / reactable_perf",
-        ns      = "tooltipexplorer/outputs",
+        ns      = "stocktipr/outputs",
         {
           df <- perf_r() |>
             dplyr::mutate(
@@ -470,7 +470,7 @@ mod_outputs_server <- function(id, inputs_r) {
 
           logger::log_debug(
             "Rendering reactable | rows: {nrow(df)}",
-            namespace = "tooltipexplorer/outputs"
+            namespace = "stocktipr/outputs"
           )
 
           reactable::reactable(
