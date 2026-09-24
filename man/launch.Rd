@@ -20,10 +20,10 @@ through to \code{shinyApp()} (e.g. \code{options = list(port = 4321)}).
 }
 \examples{
 \dontrun{
-tooltipexplorer::launch()
+stocktipr::launch()
 
 # Custom port
-tooltipexplorer::launch(options = list(port = 4242, launch.browser = TRUE))
+stocktipr::launch(options = list(port = 4242, launch.browser = TRUE))
 }
 
 }

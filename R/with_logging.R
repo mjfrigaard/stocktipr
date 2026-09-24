@@ -10,7 +10,7 @@
 #' @param context Short string identifying the call site, e.g.
 #'   `"mod_outputs / prices_r"`.  Prepended to every log message.
 #' @param ns      Logger namespace string.
-#'   Defaults to `"tooltipexplorer/app"`.
+#'   Defaults to `"stocktipr/app"`.
 #'
 #' @return The value of `expr` on success; re-throws on error.
 #'
@@ -18,13 +18,13 @@
 #' \dontrun{
 #' result <- with_logging(
 #'   context = "my_module / compute",
-#'   ns      = "tooltipexplorer/app",
+#'   ns      = "stocktipr/app",
 #'   sqrt(4)
 #' )
 #' }
 #'
 #' @export
-with_logging <- function(expr, context = "", ns = "tooltipexplorer/app") {
+with_logging <- function(expr, context = "", ns = "stocktipr/app") {
   tryCatch(
     withCallingHandlers(
       expr,

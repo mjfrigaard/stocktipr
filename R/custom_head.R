@@ -1,11 +1,11 @@
-#' Custom head tags for tooltipexplorer app
+#' Custom head tags for stocktipr app
 #'
 #' Adds Google Fonts (IBM Plex Mono) and the Bloomberg-terminal custom CSS to
 #' the app head.
 #'
 #' @return A `shiny::tags$head()` containing font imports and custom styles
 #' @noRd
-tooltipexplorer_head <- function() {
+stocktipr_head <- function() {
   shiny::tags$head(
     # Import IBM Plex fonts (mono for the terminal look, sans for long-form text)
     shiny::tags$link(

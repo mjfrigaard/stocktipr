@@ -15,12 +15,12 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(tooltipexplorer)
+library(stocktipr)
 ```
 
 ## Design Patterns
 
-This vignette covers the design patterns used to build the modules in `tooltipexplorer`.
+This vignette covers the design patterns used to build the modules in `stocktipr`.
 
 ### 1. Function-Based Module Pattern
 
@@ -96,12 +96,12 @@ Every `logger::log_*()` call carries an explicit `namespace` string scoped to it
 ``` r
 logger::log_info(
   "Fetch button pressed | tickers: [{paste(input$tickers, collapse = ', ')}]",
-  namespace = "tooltipexplorer/inputs"
+  namespace = "stocktipr/inputs"
 )
 
 # Filter by namespace in development
 app_set_log_threshold(logger::DEBUG)                                    # all namespaces
-logger::log_threshold(logger::DEBUG, namespace = "tooltipexplorer/outputs")  # one namespace
+logger::log_threshold(logger::DEBUG, namespace = "stocktipr/outputs")  # one namespace
 ```
 
 This makes it possible to silence noisy modules while debugging a specific one. See `vignette("implementation")` for the full namespace table and log-level reference.

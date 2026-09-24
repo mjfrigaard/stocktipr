@@ -14,7 +14,7 @@ app_server <- function(input, output, session) {
 
   logger::log_info(
     "Session started | session_id: {session$token}",
-    namespace = "tooltipexplorer/app"
+    namespace = "stocktipr/app"
   )
 
   # ── shinyhelper ──────────────────────────────────────────────────────────
@@ -27,27 +27,27 @@ app_server <- function(input, output, session) {
   inputs_r <- with_logging(
     mod_inputs_server("inputs"),
     context = "app_server / mod_inputs_server",
-    ns      = "tooltipexplorer/app"
+    ns      = "stocktipr/app"
   )
 
-  logger::log_info("mod_inputs_server() ready",  namespace = "tooltipexplorer/app")
+  logger::log_info("mod_inputs_server() ready",  namespace = "stocktipr/app")
 
   # ── 2. ouput module ─────────────────────────────────────────────────────
   perf_r <- with_logging(
     mod_outputs_server("outputs", inputs_r = inputs_r),
     context = "app_server / mod_outputs_server",
-    ns      = "tooltipexplorer/app"
+    ns      = "stocktipr/app"
   )
 
-  logger::log_info("mod_outputs_server() ready", namespace = "tooltipexplorer/app")
+  logger::log_info("mod_outputs_server() ready", namespace = "stocktipr/app")
 
   # ── 3. download module ───────────────────────────────────────────────────
   with_logging(
     mod_download_server("download", inputs_r = inputs_r, perf_r = perf_r),
     context = "app_server / mod_download_server",
-    ns      = "tooltipexplorer/app"
+    ns      = "stocktipr/app"
   )
-  logger::log_info("mod_download_server() ready", namespace = "tooltipexplorer/app")
+  logger::log_info("mod_download_server() ready", namespace = "stocktipr/app")
 
   # ── 4. reactive values ───────────────────────────────────────────────────
   output$vals <- shiny::renderPrint({
@@ -65,7 +65,7 @@ app_server <- function(input, output, session) {
   session$onSessionEnded(function() {
     logger::log_info(
       "Session ended   | session_id: {session$token}",
-      namespace = "tooltipexplorer/app"
+      namespace = "stocktipr/app"
     )
   })
 }

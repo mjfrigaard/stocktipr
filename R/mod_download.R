@@ -55,7 +55,7 @@ mod_download_server <- function(id, inputs_r, perf_r) {
 
     logger::log_debug(
       "mod_download_server() initialised | id: {id}",
-      namespace = "tooltipexplorer/download"
+      namespace = "stocktipr/download"
     )
 
     output$download <- shiny::downloadHandler(
@@ -63,14 +63,14 @@ mod_download_server <- function(id, inputs_r, perf_r) {
       filename = function() {
         with_logging(
           context = "mod_download / filename",
-          ns      = "tooltipexplorer/download",
+          ns      = "stocktipr/download",
           {
             ts    <- format(Sys.time(), "%Y%m%d_%H%M%S")
             ext   <- if (input$format == "html") "html" else "pdf"
-            fname <- glue::glue("tooltipexplorer_report_{ts}.{ext}")
+            fname <- glue::glue("stocktipr_report_{ts}.{ext}")
             logger::log_info(
               "Download filename generated | file: {fname}",
-              namespace = "tooltipexplorer/download"
+              namespace = "stocktipr/download"
             )
             fname
           }
@@ -83,18 +83,18 @@ mod_download_server <- function(id, inputs_r, perf_r) {
 
         logger::log_info(
           "Report render started | format: {input$format} | tickers: [{paste(inp$tickers, collapse = ', ')}]",
-          namespace = "tooltipexplorer/download"
+          namespace = "stocktipr/download"
         )
 
         template <- system.file(
           "report_template.Rmd",
-          package = "tooltipexplorer"
+          package = "stocktipr"
         )
 
         if (!nzchar(template)) {
           logger::log_error(
             "report_template.Rmd not found in package inst/",
-            namespace = "tooltipexplorer/download"
+            namespace = "stocktipr/download"
           )
           stop("Report template not found. Is the package installed correctly?")
         }
@@ -107,7 +107,7 @@ mod_download_server <- function(id, inputs_r, perf_r) {
 
         logger::log_debug(
           "Rendering to temp dir | path: {tmp_dir}",
-          namespace = "tooltipexplorer/download"
+          namespace = "stocktipr/download"
         )
 
         out_fmt <- if (input$format == "html") {
@@ -140,7 +140,7 @@ mod_download_server <- function(id, inputs_r, perf_r) {
           error = function(e) {
             logger::log_error(
               "rmarkdown::render() failed | format: {input$format} | error: {conditionMessage(e)}",
-              namespace = "tooltipexplorer/download"
+              namespace = "stocktipr/download"
             )
             shiny::showNotification(
               paste("Report generation failed:", conditionMessage(e)),
@@ -153,7 +153,7 @@ mod_download_server <- function(id, inputs_r, perf_r) {
 
         logger::log_info(
           "Report render complete | format: {input$format} | file: {file}",
-          namespace = "tooltipexplorer/download"
+          namespace = "stocktipr/download"
         )
       }
     )

@@ -9,22 +9,22 @@ app_ui <- function() {
 
   logger::log_info(
     "Building app UI",
-    namespace = "tooltipexplorer/app"
+    namespace = "stocktipr/app"
   )
 
   with_logging(
     context = "app_ui",
-    ns      = "tooltipexplorer/app",
+    ns      = "stocktipr/app",
     bslib::page_sidebar(
       title = shiny::tagList(
         bsicons::bs_icon("bar-chart-steps"),
         " Tooltip Explorer"
       ),
-      theme = tooltipexplorer_theme(),
+      theme = stocktipr_theme(),
       fillable = FALSE,
 
       # ── HEAD extras ─────────────────────────────────────────────────────
-      tooltipexplorer_head(),
+      stocktipr_head(),
       shiny::tags$head(
         # shinyalert JS — required for the delegated .sa-trigger handler.
         shinyalert::useShinyalert(force = TRUE),

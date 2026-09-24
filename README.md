@@ -1,11 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file. -->
 
-# tooltipexplorer
+# stocktipr
 
-**tooltipexplorer** is a Shiny application-package for demoing and
-comparing five tooltip and hover-info approaches in R, powered by real
-financial data from [Tidy Finance](https://www.tidy-finance.org/r/)
+**`stocktipr`** is a Shiny application-package for demoing and comparing
+five tooltip and hover-info approaches in R, powered by real financial
+data from [Tidy Finance](https://www.tidy-finance.org/r/)
 (`tidyfinance`) and
 [tidyquant](https://business-science.github.io/tidyquant/).
 
@@ -15,13 +15,13 @@ Install the development version from GitHub:
 
 ``` r
 # install.packages("pak")
-pak::pak("mjfrigaard/tooltipexplorer")
+pak::pak("mjfrigaard/stocktipr")
 ```
 
 ## Quick start
 
 ``` r
-library(tooltipexplorer)
+library(stocktipr)
 ```
 
 ``` r
@@ -109,6 +109,6 @@ app_set_log_threshold(logger::WARN)   # quiet   (production)
 
 ## Learn more
 
-See `vignette("tooltips-hover-info", package = "tooltipexplorer")` for a
-full walkthrough of the app architecture, module API, and each tooltip
+See `vignette("tooltips-hover-info", package = "stocktipr")` for a full
+walkthrough of the app architecture, module API, and each tooltip
 back-end.

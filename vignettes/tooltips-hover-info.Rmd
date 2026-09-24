@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-**`tooltipexplorer`** is a Shiny application-package for demoing and comparing tooltip and hover-info approaches in R using real financial data from [Tidy Finance](https://www.tidy-finance.org/r/) (`tidyfinance`) and [tidyquant](https://business-science.github.io/tidyquant/).
+**`stocktipr`** is a Shiny application-package for demoing and comparing tooltip and hover-info approaches in R using real financial data from [Tidy Finance](https://www.tidy-finance.org/r/) (`tidyfinance`) and [tidyquant](https://business-science.github.io/tidyquant/).
 
 ------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ R/
 ## Launching the app
 
 ```{r}
-tooltipexplorer::launch()
+stocktipr::launch()
 ```
 
 `launch()` calls `shiny::shinyApp(app_ui(), app_server)` and accepts `...` forwarded to `shiny::shinyApp()` (e.g. `options = list(port = 4000)`).
@@ -157,7 +157,7 @@ Financial data is fetched and processed through four functions:
 ### Example usage outside Shiny
 
 ```{r}
-library(tooltipexplorer)
+library(stocktipr)
 
 prices  <- get_stock_prices(c("AAPL", "MSFT"), from = "2024-01-01")
 returns <- get_stock_returns(prices)
