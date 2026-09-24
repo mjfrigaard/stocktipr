@@ -5,7 +5,7 @@ Returns a
 matching the app's Bloomberg-terminal palette (dark panels, amber
 headers, mono type, tabular numerals). Set once as the global
 `reactable.theme` option in
-[`launch()`](https://mjfrigaard.github.io/tooltipexplorer/reference/launch.md)
+[`launch()`](https://mjfrigaard.github.io/stocktipr/reference/launch.md)
 so every table inherits it without per-call theming.
 
 ## Usage

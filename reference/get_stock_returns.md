@@ -2,7 +2,7 @@
 
 Calculates daily log returns from the adjusted closing price column
 produced by
-[`get_stock_prices()`](https://mjfrigaard.github.io/tooltipexplorer/reference/get_stock_prices.md).
+[`get_stock_prices()`](https://mjfrigaard.github.io/stocktipr/reference/get_stock_prices.md).
 
 ## Usage
 
@@ -15,7 +15,7 @@ get_stock_returns(prices)
 - prices:
 
   A tibble returned by
-  [`get_stock_prices()`](https://mjfrigaard.github.io/tooltipexplorer/reference/get_stock_prices.md).
+  [`get_stock_prices()`](https://mjfrigaard.github.io/stocktipr/reference/get_stock_prices.md).
 
 ## Value
 

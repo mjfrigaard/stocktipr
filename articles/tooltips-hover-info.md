@@ -1,9 +1,8 @@
 # Tooltip and Hover-Info Explorer
 
-**`tooltipexplorer`** is a Shiny application-package for demoing and
-comparing tooltip and hover-info approaches in R using real financial
-data from [Tidy Finance](https://www.tidy-finance.org/r/)
-(`tidyfinance`) and
+**`stocktipr`** is a Shiny application-package for demoing and comparing
+tooltip and hover-info approaches in R using real financial data from
+[Tidy Finance](https://www.tidy-finance.org/r/) (`tidyfinance`) and
 [tidyquant](https://business-science.github.io/tidyquant/).
 
 ------------------------------------------------------------------------
@@ -41,10 +40,10 @@ Each module lives in a single file containing both its `_ui()` and
 
 ``` r
 
-tooltipexplorer::launch()
+stocktipr::launch()
 ```
 
-[`launch()`](https://mjfrigaard.github.io/tooltipexplorer/reference/launch.md)
+[`launch()`](https://mjfrigaard.github.io/stocktipr/reference/launch.md)
 calls `shiny::shinyApp(app_ui(), app_server)` and accepts `...`
 forwarded to
 [`shiny::shinyApp()`](https://rdrr.io/pkg/shiny/man/shinyApp.html)
@@ -58,9 +57,9 @@ forwarded to
 
 | File | Function | Role |
 |----|----|----|
-| `launch.R` | [`launch()`](https://mjfrigaard.github.io/tooltipexplorer/reference/launch.md) | Creates and runs the Shiny app |
-| `app_ui.R` | [`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md) | Top-level [`bslib::page_sidebar()`](https://rstudio.github.io/bslib/reference/page_sidebar.html) layout |
-| `app_server.R` | [`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md) | Wires all module servers together |
+| `launch.R` | [`launch()`](https://mjfrigaard.github.io/stocktipr/reference/launch.md) | Creates and runs the Shiny app |
+| `app_ui.R` | [`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md) | Top-level [`bslib::page_sidebar()`](https://rstudio.github.io/bslib/reference/page_sidebar.html) layout |
+| `app_server.R` | [`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md) | Wires all module servers together |
 
 ### Reactive flow
 
@@ -80,9 +79,9 @@ forwarded to
 
 The download module UI (`mod_download_ui("download")`) is embedded at
 the bottom of the inputs sidebar inside
-[`mod_inputs_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_ui.md);
+[`mod_inputs_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_ui.md);
 its server is wired at the top level in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md).
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md).
 
 ------------------------------------------------------------------------
 
@@ -101,7 +100,7 @@ with:
 - `dateRangeInput` — date range
 - `sliderInput` — rolling-volatility window (5–120 trading days)
 - `actionButton` — “Fetch data”
-- [`mod_download_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_ui.md)
+- [`mod_download_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_ui.md)
   embedded at the bottom
 
 **`mod_inputs_server(id)`** — returns a **reactive list**:
@@ -135,7 +134,7 @@ containing:
     [`shinyhelper::observe_helpers()`](https://rdrr.io/pkg/shinyhelper/man/observe_helpers.html)
     once per session (registered here)
 2.  Calls
-    [`get_stock_prices()`](https://mjfrigaard.github.io/tooltipexplorer/reference/get_stock_prices.md)
+    [`get_stock_prices()`](https://mjfrigaard.github.io/stocktipr/reference/get_stock_prices.md)
     → `prices_r`
 3.  Calls `get_stock_returns(prices_r())` → `returns_r`
 4.  Calls `summarise_performance(returns_r())` → `perf_r`
@@ -172,7 +171,7 @@ Financial data is fetched and processed through four functions:
 
 ``` r
 
-library(tooltipexplorer)
+library(stocktipr)
 
 prices  <- get_stock_prices(c("AAPL", "MSFT"), from = "2024-01-01")
 returns <- get_stock_returns(prices)
@@ -290,7 +289,7 @@ mod_tooltip(
 
 The `shinyalert` back-end stores content in `data-sa-*` attributes and
 fires on click via a delegated `jQuery` handler injected once in
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md).
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md).
 
 ***In `app_ui.R`:***
 
@@ -376,9 +375,9 @@ reactable::colDef(
 | `with_logging.R` | `with_logging(expr, context, ns)` | `tryCatch` wrapper that logs warnings and errors |
 | `utils_operators.R` | `%||%` | Null-coalescing operator |
 
-[`app_set_log_threshold()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_set_log_threshold.md)
+[`app_set_log_threshold()`](https://mjfrigaard.github.io/stocktipr/reference/app_set_log_threshold.md)
 is called once in
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 at session start. Pass
 [`logger::DEBUG`](https://daroczig.github.io/logger/reference/log_levels.html)
 during development for verbose output:
@@ -395,8 +394,8 @@ app_set_log_threshold(logger::DEBUG)
 
 | Where does the tooltip appear? | Use | `type` |
 |----|----|----|
-| Input label / icon in sidebar | [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | `"bslib"` |
-| Metric card with help modal | [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | `"shinyhelper"` |
-| Metric label — CSS hover | [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | `"prompter"` |
-| Clickable element → modal alert | [`mod_tooltip()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_tooltip.md) | `"shinyalert"` |
-| reactable table cell | [`mod_hoverinfo()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_hoverinfo.md) | `"reactable"` |
+| Input label / icon in sidebar | [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | `"bslib"` |
+| Metric card with help modal | [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | `"shinyhelper"` |
+| Metric label — CSS hover | [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | `"prompter"` |
+| Clickable element → modal alert | [`mod_tooltip()`](https://mjfrigaard.github.io/stocktipr/reference/mod_tooltip.md) | `"shinyalert"` |
+| reactable table cell | [`mod_hoverinfo()`](https://mjfrigaard.github.io/stocktipr/reference/mod_hoverinfo.md) | `"reactable"` |

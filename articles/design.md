@@ -2,9 +2,9 @@
 
 ``` r
 
-library(tooltipexplorer)
+library(stocktipr)
 #> 
-#> Attaching package: 'tooltipexplorer'
+#> Attaching package: 'stocktipr'
 #> The following object is masked from 'package:base':
 #> 
 #>     %||%
@@ -13,7 +13,7 @@ library(tooltipexplorer)
 ## Design Patterns
 
 This vignette covers the design patterns used to build the modules in
-`tooltipexplorer`.
+`stocktipr`.
 
 ### 1. Function-Based Module Pattern
 
@@ -55,9 +55,9 @@ mod_inputs_server <- function(id) {
 ```
 
 The same `id` string must be passed to both the UI and server calls in
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md)
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md)
 /
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 for the namespaces to line up — there is no shared object enforcing
 this, so the discipline is naming-convention only
 (`mod_inputs_ui("inputs")` pairs with `mod_inputs_server("inputs")`).
@@ -78,13 +78,13 @@ perf_r   <- mod_outputs_server("outputs", inputs_r = inputs_r)
 Each module’s dependencies are visible directly in its function
 signature, which makes the top-down reactive flow explicit and easy to
 trace from
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 alone.
 
 ### 4. Reactive Composition Inside `moduleServer()`
 
 Inside
-[`mod_outputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_outputs_server.md),
+[`mod_outputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_outputs_server.md),
 a chain of local reactives builds up the performance pipeline step by
 step:
 
@@ -115,15 +115,15 @@ scoped to its module:
 
 logger::log_info(
   "Fetch button pressed | tickers: [{paste(input$tickers, collapse = ', ')}]",
-  namespace = "tooltipexplorer/inputs"
+  namespace = "stocktipr/inputs"
 )
 
 # Filter by namespace in development
 app_set_log_threshold(logger::DEBUG)                                    # all namespaces
-logger::log_threshold(logger::DEBUG, namespace = "tooltipexplorer/outputs")  # one namespace
+logger::log_threshold(logger::DEBUG, namespace = "stocktipr/outputs")  # one namespace
 ```
 
 This makes it possible to silence noisy modules while debugging a
 specific one. See
-[`vignette("implementation")`](https://mjfrigaard.github.io/tooltipexplorer/articles/implementation.md)
+[`vignette("implementation")`](https://mjfrigaard.github.io/stocktipr/articles/implementation.md)
 for the full namespace table and log-level reference.

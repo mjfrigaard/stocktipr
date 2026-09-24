@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Module structure • tooltipexplorer</title>
+<title>Module structure • stocktipr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Ubuntu-0.4.10/font.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">tooltipexplorer</a>
+    <a class="navbar-brand me-2" href="../index.html">stocktipr</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
@@ -36,9 +36,12 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/tooltips-hover-info.html">Tooltip and Hover-Info Explorer</a></li>
-    <li><a class="dropdown-item" href="../articles/modules.html">Module structure</a></li>
-    <li><a class="dropdown-item" href="../articles/theme.html">Theme</a></li>
+    <li><a class="dropdown-item" href="../articles/design.html">Design</a></li>
+    <li><a class="dropdown-item" href="../articles/implementation.html">Implementation</a></li>
     <li><a class="dropdown-item" href="../articles/logger-namespaces.html">Logging with logger: namespaces and thresholds</a></li>
+    <li><a class="dropdown-item" href="../articles/modules.html">Module structure</a></li>
+    <li><a class="dropdown-item" href="../articles/structure.html">Structure</a></li>
+    <li><a class="dropdown-item" href="../articles/theme.html">Theme</a></li>
   </ul>
 </li>
       </ul>
@@ -68,10 +71,10 @@
 
     
     
-<p><code>tooltipexplorer</code> is organized as a collection of Shiny
-modules, wired together in the <code><a href="../reference/app_server.html">app_server()</a></code>. This vignette
-explains the naming convention, the UI/server split, how data flows
-between modules, and the role each module plays.</p>
+<p><code>stocktipr</code> is organized as a collection of Shiny modules,
+wired together in the <code><a href="../reference/app_server.html">app_server()</a></code>. This vignette explains
+the naming convention, the UI/server split, how data flows between
+modules, and the role each module plays.</p>
 <hr>
 <div class="section level2">
 <h2 id="naming-convention">Naming convention<a class="anchor" aria-label="anchor" href="#naming-convention"></a>

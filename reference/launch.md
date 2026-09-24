@@ -3,9 +3,9 @@
 Convenience wrapper that calls
 [`shiny::shinyApp()`](https://rdrr.io/pkg/shiny/man/shinyApp.html) with
 the package's
-[`app_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_ui.md)
+[`app_ui()`](https://mjfrigaard.github.io/stocktipr/reference/app_ui.md)
 and
-[`app_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/app_server.md)
+[`app_server()`](https://mjfrigaard.github.io/stocktipr/reference/app_server.md)
 functions. Pass any additional arguments through to `shinyApp()` (e.g.
 `options = list(port = 4321)`).
 
@@ -31,9 +31,9 @@ in the viewer / browser.
 
 ``` r
 if (FALSE) { # \dontrun{
-tooltipexplorer::launch()
+stocktipr::launch()
 
 # Custom port
-tooltipexplorer::launch(options = list(port = 4242, launch.browser = TRUE))
+stocktipr::launch(options = list(port = 4242, launch.browser = TRUE))
 } # }
 ```

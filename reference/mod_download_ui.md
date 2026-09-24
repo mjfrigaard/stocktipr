@@ -3,7 +3,7 @@
 A [`bslib::card()`](https://rstudio.github.io/bslib/reference/card.html)
 containing a report-format selector (HTML / PDF) and a download button.
 Embed inside the sidebar via
-[`mod_inputs_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_ui.md).
+[`mod_inputs_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_ui.md).
 
 ## Usage
 
@@ -24,4 +24,4 @@ tag object.
 
 ## See also
 
-[`mod_download_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_server.md)
+[`mod_download_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_server.md)

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Implementation • tooltipexplorer</title>
+<title>Implementation • stocktipr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Ubuntu-0.4.10/font.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">tooltipexplorer</a>
+    <a class="navbar-brand me-2" href="../index.html">stocktipr</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
@@ -38,6 +38,8 @@
 <li><a class="dropdown-item" href="../articles/tooltips-hover-info.html">Tooltip and Hover-Info Explorer</a></li>
     <li><a class="dropdown-item" href="../articles/design.html">Design</a></li>
     <li><a class="dropdown-item" href="../articles/implementation.html">Implementation</a></li>
+    <li><a class="dropdown-item" href="../articles/logger-namespaces.html">Logging with logger: namespaces and thresholds</a></li>
+    <li><a class="dropdown-item" href="../articles/modules.html">Module structure</a></li>
     <li><a class="dropdown-item" href="../articles/structure.html">Structure</a></li>
     <li><a class="dropdown-item" href="../articles/theme.html">Theme</a></li>
   </ul>
@@ -70,9 +72,9 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/tooltipexplorer/">tooltipexplorer</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/stocktipr/">stocktipr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'tooltipexplorer'</span></span>
+<span><span class="co">#&gt; Attaching package: 'stocktipr'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     %||%</span></span></code></pre></div>
@@ -120,13 +122,13 @@ mod_download_server(inputs_r, perf_r) → handles download</code></pre>
 <div class="section level3">
 <h3 id="logging-architecture">Logging Architecture<a class="anchor" aria-label="anchor" href="#logging-architecture"></a>
 </h3>
-<pre><code>tooltipexplorer/app                 # App-level events
-├── tooltipexplorer/inputs        # Input module events
-├── tooltipexplorer/outputs       # Output module events
-│   ├── tooltipexplorer/tooltip   # Tooltip dispatch
-│   └── tooltipexplorer/hoverinfo # Hover-info rendering
-└── tooltipexplorer/download      # Download module events</code></pre>
-<p><code>tooltipexplorer</code> uses the <a href="https://daroczig.github.io/logger/" class="external-link"><code>logger</code></a>
+<pre><code>stocktipr/app                 # App-level events
+├── stocktipr/inputs        # Input module events
+├── stocktipr/outputs       # Output module events
+│   ├── stocktipr/tooltip   # Tooltip dispatch
+│   └── stocktipr/hoverinfo # Hover-info rendering
+└── stocktipr/download      # Download module events</code></pre>
+<p><code>stocktipr</code> uses the <a href="https://daroczig.github.io/logger/" class="external-link"><code>logger</code></a>
 package for structured, namespace-aware logging throughout the
 application. Every log call carries a <code>namespace</code> argument
 identifying exactly which module or layer emitted the message.</p>
@@ -212,41 +214,41 @@ explicitly lower the threshold.</p>
 <td>logger’s built-in global namespace (fallback)</td>
 </tr>
 <tr class="even">
-<td><code>"tooltipexplorer/app"</code></td>
+<td><code>"stocktipr/app"</code></td>
 <td>
 <code>app_ui.R</code>, <code>app_server.R</code>
 </td>
 <td>UI construction, session lifecycle, module wiring</td>
 </tr>
 <tr class="odd">
-<td><code>"tooltipexplorer/inputs"</code></td>
+<td><code>"stocktipr/inputs"</code></td>
 <td><code>mod_inputs.R</code></td>
 <td>Fetch-button events, reactive inputs list</td>
 </tr>
 <tr class="even">
-<td><code>"tooltipexplorer/outputs"</code></td>
+<td><code>"stocktipr/outputs"</code></td>
 <td><code>mod_outputs.R</code></td>
 <td>Price fetch, returns, performance, all render calls</td>
 </tr>
 <tr class="odd">
-<td><code>"tooltipexplorer/download"</code></td>
+<td><code>"stocktipr/download"</code></td>
 <td><code>mod_download.R</code></td>
 <td>Filename generation, report render</td>
 </tr>
 <tr class="even">
-<td><code>"tooltipexplorer/tooltip"</code></td>
+<td><code>"stocktipr/tooltip"</code></td>
 <td><code>mod_tooltip.R</code></td>
 <td>Tooltip helper dispatch</td>
 </tr>
 <tr class="odd">
-<td><code>"tooltipexplorer/hoverinfo"</code></td>
+<td><code>"stocktipr/hoverinfo"</code></td>
 <td><code>mod_hoverinfo.R</code></td>
 <td>Hover-span construction</td>
 </tr>
 </tbody>
 </table>
-<p>The <code>"tooltipexplorer/&lt;module&gt;"</code> convention means
-you can silence one noisy module while keeping the others verbose.</p>
+<p>The <code>"stocktipr/&lt;module&gt;"</code> convention means you can
+silence one noisy module while keeping the others verbose.</p>
 </div>
 <div class="section level4">
 <h4 id="app_set_log_threshold">
@@ -259,12 +261,12 @@ namespace in the table above:</p>
 <code class="sourceCode R"><span><span class="va">app_set_log_threshold</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">level</span> <span class="op">=</span> <span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">INFO</a></span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">namespaces</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"global"</span>,</span>
-<span>    <span class="st">"tooltipexplorer/app"</span>,</span>
-<span>    <span class="st">"tooltipexplorer/inputs"</span>,</span>
-<span>    <span class="st">"tooltipexplorer/outputs"</span>,</span>
-<span>    <span class="st">"tooltipexplorer/download"</span>,</span>
-<span>    <span class="st">"tooltipexplorer/tooltip"</span>,</span>
-<span>    <span class="st">"tooltipexplorer/hoverinfo"</span></span>
+<span>    <span class="st">"stocktipr/app"</span>,</span>
+<span>    <span class="st">"stocktipr/inputs"</span>,</span>
+<span>    <span class="st">"stocktipr/outputs"</span>,</span>
+<span>    <span class="st">"stocktipr/download"</span>,</span>
+<span>    <span class="st">"stocktipr/tooltip"</span>,</span>
+<span>    <span class="st">"stocktipr/hoverinfo"</span></span>
 <span>  <span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">namespaces</span>, \<span class="op">(</span><span class="va">ns</span><span class="op">)</span> <span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span><span class="va">level</span>, namespace <span class="op">=</span> <span class="va">ns</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span></span>
@@ -272,25 +274,25 @@ namespace in the table above:</p>
 <p>Common threshold recipes:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># default (production) — INFO and above only</span></span>
-<span><span class="fu">tooltipexplorer</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">INFO</a></span><span class="op">)</span></span>
+<span><span class="fu">stocktipr</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">INFO</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># dev — everything including DEBUG</span></span>
-<span><span class="fu">tooltipexplorer</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">DEBUG</a></span><span class="op">)</span></span>
+<span><span class="fu">stocktipr</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">DEBUG</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># silent except for warnings and errors</span></span>
-<span><span class="fu">tooltipexplorer</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">WARN</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">stocktipr</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">WARN</a></span><span class="op">)</span></span></code></pre></div>
 <p>You can override individual namespaces after calling
 <code><a href="../reference/app_set_log_threshold.html">app_set_log_threshold()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># make the outputs module verbose while keeping everything else at INFO</span></span>
-<span><span class="fu">tooltipexplorer</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">INFO</a></span><span class="op">)</span></span>
-<span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">DEBUG</a></span>, namespace <span class="op">=</span> <span class="st">"tooltipexplorer/outputs"</span><span class="op">)</span></span>
+<span><span class="fu">stocktipr</span><span class="fu">::</span><span class="fu"><a href="../reference/app_set_log_threshold.html">app_set_log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">INFO</a></span><span class="op">)</span></span>
+<span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">DEBUG</a></span>, namespace <span class="op">=</span> <span class="st">"stocktipr/outputs"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># silence the download module entirely</span></span>
-<span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">FATAL</a></span>, namespace <span class="op">=</span> <span class="st">"tooltipexplorer/download"</span><span class="op">)</span></span>
+<span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span><span class="fu">logger</span><span class="fu">::</span><span class="va"><a href="https://daroczig.github.io/logger/reference/log_levels.html" class="external-link">FATAL</a></span>, namespace <span class="op">=</span> <span class="st">"stocktipr/download"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># read back the current threshold for a namespace</span></span>
-<span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span>namespace <span class="op">=</span> <span class="st">"tooltipexplorer/outputs"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span>namespace <span class="op">=</span> <span class="st">"stocktipr/outputs"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="with_logging">
@@ -301,7 +303,7 @@ used around expressions that might warn or error. It logs both with a
 <code>context</code> label, then re-issues the condition so Shiny and
 the caller continue to see it normally:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">with_logging</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span>, <span class="va">context</span> <span class="op">=</span> <span class="st">""</span>, <span class="va">ns</span> <span class="op">=</span> <span class="st">"tooltipexplorer/app"</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="va">with_logging</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span>, <span class="va">context</span> <span class="op">=</span> <span class="st">""</span>, <span class="va">ns</span> <span class="op">=</span> <span class="st">"stocktipr/app"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">withCallingHandlers</a></span><span class="op">(</span></span>
 <span>      <span class="va">expr</span>,</span>
@@ -345,33 +347,33 @@ output renderers inside module server functions — see
 <td>
 <code><a href="../reference/app_ui.html">app_ui()</a></code> / <code><a href="../reference/app_server.html">app_server()</a></code>
 </td>
-<td><code>"tooltipexplorer/app"</code></td>
+<td><code>"stocktipr/app"</code></td>
 <td>Session start/end (<code>INFO</code>); warnings/errors from
 <code><a href="../reference/with_logging.html">with_logging()</a></code>
 </td>
 </tr>
 <tr class="even">
 <td><code><a href="../reference/mod_inputs_server.html">mod_inputs_server()</a></code></td>
-<td><code>"tooltipexplorer/inputs"</code></td>
+<td><code>"stocktipr/inputs"</code></td>
 <td>Init (<code>DEBUG</code>); fetch pressed (<code>INFO</code>); no
 tickers selected (<code>WARN</code>)</td>
 </tr>
 <tr class="odd">
 <td><code><a href="../reference/mod_outputs_server.html">mod_outputs_server()</a></code></td>
-<td><code>"tooltipexplorer/outputs"</code></td>
+<td><code>"stocktipr/outputs"</code></td>
 <td>Price fetch/returns/summary lifecycle
 (<code>INFO</code>/<code>DEBUG</code>); fetch/compute failures
 (<code>ERROR</code>)</td>
 </tr>
 <tr class="even">
 <td><code><a href="../reference/mod_download_server.html">mod_download_server()</a></code></td>
-<td><code>"tooltipexplorer/download"</code></td>
+<td><code>"stocktipr/download"</code></td>
 <td>Filename generated, render started/complete (<code>INFO</code>);
 template missing, render failure (<code>ERROR</code>)</td>
 </tr>
 <tr class="odd">
 <td><code><a href="../reference/mod_hoverinfo.html">mod_hoverinfo()</a></code></td>
-<td><code>"tooltipexplorer/hoverinfo"</code></td>
+<td><code>"stocktipr/hoverinfo"</code></td>
 <td>Span construction (<code>DEBUG</code>); build failure
 (<code>ERROR</code>)</td>
 </tr>
@@ -387,12 +389,12 @@ easy to <code>grep</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_level.html" class="external-link">log_info</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Fetching prices | tickers: [{paste(tickers, collapse = ', ')}] | from: {from} | to: {to}"</span>,</span>
-<span>  namespace <span class="op">=</span> <span class="st">"tooltipexplorer/outputs"</span></span>
+<span>  namespace <span class="op">=</span> <span class="st">"stocktipr/outputs"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># → INFO [2026-04-03 08:00:00] Fetching prices | tickers: [AAPL, MSFT] | from: 2024-01-01 | to: 2024-12-31</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"tickers:"</span> app.log</span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"ERROR"</span> app.log</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"tooltipexplorer/outputs"</span> app.log</span></code></pre></div>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"stocktipr/outputs"</span> app.log</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="writing-to-a-file">Writing to a file<a class="anchor" aria-label="anchor" href="#writing-to-a-file"></a>
@@ -400,14 +402,14 @@ easy to <code>grep</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Append all INFO+ messages to a rotating log file</span></span>
 <span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_appender.html" class="external-link">log_appender</a></span><span class="op">(</span></span>
-<span>  <span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/appender_tee.html" class="external-link">appender_tee</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"tooltipexplorer.log"</span><span class="op">)</span>,</span>
-<span>  namespace <span class="op">=</span> <span class="st">"tooltipexplorer/app"</span></span>
+<span>  <span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/appender_tee.html" class="external-link">appender_tee</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"stocktipr.log"</span><span class="op">)</span>,</span>
+<span>  namespace <span class="op">=</span> <span class="st">"stocktipr/app"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Or route a specific namespace to its own file</span></span>
 <span><span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_appender.html" class="external-link">log_appender</a></span><span class="op">(</span></span>
 <span>  <span class="fu">logger</span><span class="fu">::</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/appender_file.html" class="external-link">appender_file</a></span><span class="op">(</span><span class="st">"outputs.log"</span><span class="op">)</span>,</span>
-<span>  namespace <span class="op">=</span> <span class="st">"tooltipexplorer/outputs"</span></span>
+<span>  namespace <span class="op">=</span> <span class="st">"stocktipr/outputs"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
@@ -422,7 +424,7 @@ easy to <code>grep</code>:</p>
 <p>Key sections:</p>
 <ul>
 <li>
-<strong>Package</strong>: <code>tooltipexplorer</code>
+<strong>Package</strong>: <code>stocktipr</code>
 </li>
 <li>
 <strong>Version</strong>: <code>0.0.1</code>

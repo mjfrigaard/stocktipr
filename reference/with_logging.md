@@ -14,7 +14,7 @@ that:
 ## Usage
 
 ``` r
-with_logging(expr, context = "", ns = "tooltipexplorer/app")
+with_logging(expr, context = "", ns = "stocktipr/app")
 ```
 
 ## Arguments
@@ -30,7 +30,7 @@ with_logging(expr, context = "", ns = "tooltipexplorer/app")
 
 - ns:
 
-  Logger namespace string. Defaults to `"tooltipexplorer/app"`.
+  Logger namespace string. Defaults to `"stocktipr/app"`.
 
 ## Value
 
@@ -42,7 +42,7 @@ The value of `expr` on success; re-throws on error.
 if (FALSE) { # \dontrun{
 result <- with_logging(
   context = "my_module / compute",
-  ns      = "tooltipexplorer/app",
+  ns      = "stocktipr/app",
   sqrt(4)
 )
 } # }

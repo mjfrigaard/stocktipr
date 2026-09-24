@@ -20,12 +20,12 @@ mod_download_server(id, inputs_r, perf_r)
 - inputs_r:
 
   Reactive list returned by
-  [`mod_inputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_inputs_server.md).
+  [`mod_inputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_inputs_server.md).
 
 - perf_r:
 
   Reactive tibble returned by
-  [`mod_outputs_server()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_outputs_server.md).
+  [`mod_outputs_server()`](https://mjfrigaard.github.io/stocktipr/reference/mod_outputs_server.md).
 
 ## Value
 
@@ -33,4 +33,4 @@ Called for side-effects; returns `NULL` invisibly.
 
 ## See also
 
-[`mod_download_ui()`](https://mjfrigaard.github.io/tooltipexplorer/reference/mod_download_ui.md)
+[`mod_download_ui()`](https://mjfrigaard.github.io/stocktipr/reference/mod_download_ui.md)

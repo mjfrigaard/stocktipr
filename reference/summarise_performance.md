@@ -14,7 +14,7 @@ summarise_performance(returns)
 - returns:
 
   A tibble returned by
-  [`get_stock_returns()`](https://mjfrigaard.github.io/tooltipexplorer/reference/get_stock_returns.md).
+  [`get_stock_returns()`](https://mjfrigaard.github.io/stocktipr/reference/get_stock_returns.md).
 
 ## Value
 
