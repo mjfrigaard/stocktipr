@@ -6,6 +6,11 @@ data from [Tidy Finance](https://www.tidy-finance.org/r/)
 (`tidyfinance`) and
 [tidyquant](https://business-science.github.io/tidyquant/).
 
+An R6 version of this app (with the same tooltip demos built on R6
+classes) is available in
+[`stocktipr6`](https://github.com/mjfrigaard/stocktipr6)
+([site](https://mjfrigaard.github.io/stocktipr6/)).
+
 ## Installation
 
 Install the development version from GitHub:
