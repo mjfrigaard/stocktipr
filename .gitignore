@@ -3,8 +3,6 @@ inst/doc
 /Meta/
 docs
 .Rproj.user
-.positai
-.posit
 
 /.quarto/
 **/*.quarto_ipynb
