@@ -70,6 +70,37 @@ The reactive data flow is strictly top-down:
 
 No module reaches up into its parent or sideways into a sibling.
 
+### Call stack
+
+The tree below comes from
+[`stackcallr`](https://mjfrigaard.github.io/stackcallr/).
+`call_tree_dir()` parses the files in `R/` without running them.
+`modules_only = TRUE` keeps the module functions and the path from
+[`launch()`](https://mjfrigaard.github.io/stocktipr/reference/launch.md)
+down to each one.
+
+``` r
+
+suppressWarnings(
+  stackcallr::call_tree_dir(
+    "../R",
+    root = "launch",
+    modules_only = TRUE,
+    exclude = c("with_logging", "utils_reactable_theme")
+  )
+)
+```
+
+    █─launch
+    ├─█─app_ui
+    │ ├─█─mod_inputs_ui
+    │ │ └─mod_download_ui
+    │ └─mod_outputs_ui
+    └─█─app_server
+      ├─mod_inputs_server
+      ├─mod_outputs_server
+      └─mod_download_server
+
 ------------------------------------------------------------------------
 
 ## File Structure

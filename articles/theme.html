@@ -7,9 +7,9 @@
 <title>Theme • stocktipr</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Sans-0.4.10/font.css" rel="stylesheet">
-<link href="../deps/IBM_Plex_Mono-0.4.10/font.css" rel="stylesheet">
-<link href="../deps/IBM_Plex_Sans_Condensed-0.4.10/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Sans-0.5.0/font.css" rel="stylesheet">
+<link href="../deps/IBM_Plex_Mono-0.5.0/font.css" rel="stylesheet">
+<link href="../deps/IBM_Plex_Sans_Condensed-0.5.0/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Theme">
@@ -238,16 +238,28 @@ unchanged for the middle and low Sharpe tiers.</li>
 <div class="section level3">
 <h3 id="module-call-structure">Module call structure<a class="anchor" aria-label="anchor" href="#module-call-structure"></a>
 </h3>
-<p>How the theme pieces are wired together, from the entry point
-down:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>█─launch</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>├─█─options</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>│ └─reactable.theme = █─utils_reactable_theme</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>└─█─shinyApp</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  ├─█─app_ui</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  │ ├─theme = █─stocktipr_theme</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  │ └─█─stocktipr_head</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  └─█─app_server</span></code></pre></div>
+<p>How the theme pieces are wired together, from the entry point down.
+The tree comes from <a href="https://mjfrigaard.github.io/stackcallr/" class="external-link"><code>stackcallr</code></a>.
+<code>call_tree_dir()</code> parses the files in <code>R/</code> without
+running them. <code>keep</code> trims the tree to the theme functions
+and the path down to each one.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>  <span class="fu">stackcallr</span><span class="fu">::</span><span class="fu"><a href="https://mjfrigaard.github.io/stackcallr/reference/call_tree_dir.html" class="external-link">call_tree_dir</a></span><span class="op">(</span></span>
+<span>    <span class="st">"../R"</span>,</span>
+<span>    root <span class="op">=</span> <span class="st">"launch"</span>,</span>
+<span>    include_ns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"base"</span>, <span class="st">"shiny"</span><span class="op">)</span>,</span>
+<span>    keep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"^utils_reactable_theme$"</span>, <span class="st">"^stocktipr_theme$"</span>, <span class="st">"^stocktipr_head$"</span><span class="op">)</span>,</span>
+<span>    prune <span class="op">=</span> <span class="st">"list"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>█─launch
+├─█─options
+│ └─utils_reactable_theme
+└─█─shinyApp
+  └─█─app_ui
+    ├─stocktipr_theme
+    └─stocktipr_head</code></pre>
 </div>
 <div class="section level3">
 <h3 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>

@@ -7,9 +7,9 @@
 <title>Structure • stocktipr</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Sans-0.4.10/font.css" rel="stylesheet">
-<link href="../deps/IBM_Plex_Mono-0.4.10/font.css" rel="stylesheet">
-<link href="../deps/IBM_Plex_Sans_Condensed-0.4.10/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Sans-0.5.0/font.css" rel="stylesheet">
+<link href="../deps/IBM_Plex_Mono-0.5.0/font.css" rel="stylesheet">
+<link href="../deps/IBM_Plex_Sans_Condensed-0.5.0/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Structure">
@@ -151,7 +151,33 @@ download server consumes — the only inter-module dependency:</p>
 <p>The reactive data flow is strictly top-down:</p>
 <pre><code>mod_inputs_server()  ──► inputs_r  ──► mod_outputs_server()  ──► perf_r  ──► mod_download_server()</code></pre>
 <p>No module reaches up into its parent or sideways into a sibling.</p>
+<div class="section level3">
+<h3 id="call-stack">Call stack<a class="anchor" aria-label="anchor" href="#call-stack"></a>
+</h3>
+<p>The tree below comes from <a href="https://mjfrigaard.github.io/stackcallr/" class="external-link"><code>stackcallr</code></a>.
+<code>call_tree_dir()</code> parses the files in <code>R/</code> without
+running them. <code>modules_only = TRUE</code> keeps the module
+functions and the path from <code><a href="../reference/launch.html">launch()</a></code> down to each one.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>  <span class="fu">stackcallr</span><span class="fu">::</span><span class="fu"><a href="https://mjfrigaard.github.io/stackcallr/reference/call_tree_dir.html" class="external-link">call_tree_dir</a></span><span class="op">(</span></span>
+<span>    <span class="st">"../R"</span>,</span>
+<span>    root <span class="op">=</span> <span class="st">"launch"</span>,</span>
+<span>    modules_only <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    exclude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"with_logging"</span>, <span class="st">"utils_reactable_theme"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>█─launch
+├─█─app_ui
+│ ├─█─mod_inputs_ui
+│ │ └─mod_download_ui
+│ └─mod_outputs_ui
+└─█─app_server
+  ├─mod_inputs_server
+  ├─mod_outputs_server
+  └─mod_download_server</code></pre>
 <hr>
+</div>
 </div>
 <div class="section level2">
 <h2 id="file-structure">File Structure<a class="anchor" aria-label="anchor" href="#file-structure"></a>
@@ -386,15 +412,15 @@ exclusions</li>
 <code>mod_&lt;name&gt;_server()</code>, both exported with
 <code>@export</code>.</p>
 <p><strong>2.</strong> Add the UI call to <code><a href="../reference/app_ui.html">app_ui()</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># app_ui.R</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>bslib<span class="sc">::</span><span class="fu">page_sidebar</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">sidebar =</span> <span class="fu">mod_inputs_ui</span>(<span class="st">"inputs"</span>),</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">mod_outputs_ui</span>(<span class="st">"outputs"</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  mod_<span class="sc">&lt;</span>name<span class="sc">&gt;</span><span class="fu">_ui</span>(<span class="st">"&lt;name&gt;"</span>)     <span class="co"># add here</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># app_ui.R</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>bslib<span class="sc">::</span><span class="fu">page_sidebar</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">sidebar =</span> <span class="fu">mod_inputs_ui</span>(<span class="st">"inputs"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">mod_outputs_ui</span>(<span class="st">"outputs"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  mod_<span class="sc">&lt;</span>name<span class="sc">&gt;</span><span class="fu">_ui</span>(<span class="st">"&lt;name&gt;"</span>)     <span class="co"># add here</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>)</span></code></pre></div>
 <p><strong>3.</strong> Wire the server in <code><a href="../reference/app_server.html">app_server()</a></code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># app_server.R</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>mod_<span class="sc">&lt;</span>name<span class="sc">&gt;</span><span class="fu">_server</span>(<span class="st">"&lt;name&gt;"</span>, inputs_r, perf_r)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># app_server.R</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>mod_<span class="sc">&lt;</span>name<span class="sc">&gt;</span><span class="fu">_server</span>(<span class="st">"&lt;name&gt;"</span>, inputs_r, perf_r)</span></code></pre></div>
 <p><strong>4.</strong> Run <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> to update
 <code>NAMESPACE</code> and regenerate the help page, then
 <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> to update the reference index.</p>

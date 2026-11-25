@@ -107,18 +107,32 @@ theme <- if (sharpe >= 1) {
 
 ### Module call structure
 
-How the theme pieces are wired together, from the entry point down:
+How the theme pieces are wired together, from the entry point down. The
+tree comes from
+[`stackcallr`](https://mjfrigaard.github.io/stackcallr/).
+`call_tree_dir()` parses the files in `R/` without running them. `keep`
+trims the tree to the theme functions and the path down to each one.
 
-``` default
-█─launch
-├─█─options
-│ └─reactable.theme = █─utils_reactable_theme
-└─█─shinyApp
-  ├─█─app_ui
-  │ ├─theme = █─stocktipr_theme
-  │ └─█─stocktipr_head
-  └─█─app_server
+``` r
+
+suppressWarnings(
+  stackcallr::call_tree_dir(
+    "../R",
+    root = "launch",
+    include_ns = c("base", "shiny"),
+    keep = c("^utils_reactable_theme$", "^stocktipr_theme$", "^stocktipr_head$"),
+    prune = "list"
+  )
+)
 ```
+
+    █─launch
+    ├─█─options
+    │ └─utils_reactable_theme
+    └─█─shinyApp
+      └─█─app_ui
+        ├─stocktipr_theme
+        └─stocktipr_head
 
 ### Implementation
 
