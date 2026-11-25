@@ -61,6 +61,21 @@ mod_inputs_server()  ──► inputs_r  ──► mod_outputs_server()  ──�
 
 No module reaches up into its parent or sideways into a sibling.
 
+### Call stack
+
+The tree below comes from [`stackcallr`](https://mjfrigaard.github.io/stackcallr/). `call_tree_dir()` parses the files in `R/` without running them. `modules_only = TRUE` keeps the module functions and the path from `launch()` down to each one.
+
+```{r call-stack-modules, eval = requireNamespace("stackcallr", quietly = TRUE), collapse = FALSE, comment = ""}
+suppressWarnings(
+  stackcallr::call_tree_dir(
+    "../R",
+    root = "launch",
+    modules_only = TRUE,
+    exclude = c("with_logging", "utils_reactable_theme")
+  )
+)
+```
+
 ------------------------------------------------------------------------
 
 ## File Structure

@@ -28,7 +28,10 @@ Imports:
 Suggests: 
     devtools,
     knitr,
+    stackcallr,
     testthat (>= 3.0.0)
+Remotes:
+    mjfrigaard/stackcallr
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
